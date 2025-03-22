@@ -10,11 +10,14 @@
   },
   "main": "dist/index.js",
   "scripts": {
+    "deploy:commands": "ts-node scripts/deployCommands.ts",
     "lint": "eslint '**/*.{js,ts,tsx}' --cache && git add . && git commit -m 'style: lint'",
     "release": "npx commit-and-tag-version",
     "build": "tsc",
-    "start": "NODE_ENV=production tsc && node -r tsconfig-paths/register dist/index.js",
-    "dev": "NODE_ENV=development ts-node -r tsconfig-paths/register src/index.ts"
+    "start": "node -r tsconfig-paths/register dist/bot/index.js",
+    "dev": "nodemon --watch src --ext ts --exec ts-node  -r tsconfig-paths/register src/bot/index.ts",
+    "test": "npm run build && node dist/tests/runner",
+    "db": "npx prisma format && npx prisma generate && npx prisma db push"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -22,10 +25,13 @@
   "keywords": [],
   "packageManager": "pnpm@10.6.5",
   "dependencies": {
+    "@prisma/client": "^6.5.0",
     "axios": "^1.7.9",
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.7",
+    "nodemon": "^3.1.9",
     "path": "^0.12.7",
+    "prisma": "^6.5.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2"
@@ -39,5 +45,13 @@
     "eslint": "^9.17.0",
     "eslint-define-config": "^2.1.0",
     "pidusage": "^3.0.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma"
+    ]
   }
 }

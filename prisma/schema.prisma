@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id  String  @id @unique
+  tos Boolean @default(false)
+
+  roleplayReceived RoleplayCommand[] @relation("RoleplayReceived")
+  roleplayGiven    RoleplayCommand[] @relation("RoleplayGiven")
+}
+
+model RoleplayCommand {
+  uuid String @id @unique @default(uuid())
+
+  type     Int
+  userId   String
+  targetId String
+
+  receiver User @relation("RoleplayGiven", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  supplier User @relation("RoleplayReceived", fields: [targetId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
