@@ -1,0 +1,12 @@
+name: Read Custom Properties
+on: push
+jobs:
+  read-properties:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Read Custom Properties
+        run: |
+          cat .github/custom-properties.json

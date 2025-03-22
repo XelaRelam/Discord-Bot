@@ -1,0 +1,43 @@
+{
+  "name": "xelarelam_bot",
+  "version": "1.0.0",
+  "description": "Bot For XelaRelam",
+  "author": "LynnuxDev",
+  "license": "BSD-4-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XelaRelam/Discord-Bot"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "eslint '**/*.{js,ts,tsx}' --cache && git add . && git commit -m 'style: lint'",
+    "release": "npx commit-and-tag-version",
+    "build": "tsc",
+    "start": "NODE_ENV=production tsc && node -r tsconfig-paths/register dist/index.js",
+    "dev": "NODE_ENV=development ts-node -r tsconfig-paths/register src/index.ts"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [],
+  "packageManager": "pnpm@10.6.5",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.7",
+    "path": "^0.12.7",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/ws": "^8.5.13",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "commit-and-tag-version": "^12.5.0",
+    "eslint": "^9.17.0",
+    "eslint-define-config": "^2.1.0",
+    "pidusage": "^3.0.2"
+  }
+}

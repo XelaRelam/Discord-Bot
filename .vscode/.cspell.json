@@ -1,0 +1,18 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "dictionaries": [],
+  "languageSettings": [
+    {
+      "languageId": "typescript"
+    }
+  ],
+  "words": [
+    "axios",
+    "dotenv",
+    "eslintcache",
+    "jspm",
+    "pids",
+    "xelarelam"
+  ]
+}
