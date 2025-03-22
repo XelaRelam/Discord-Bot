@@ -5,6 +5,9 @@ dist/
 package-lock.json
 pnpm-lock.yaml
 
+# Database
+**/XelaRelam.db
+
 # Logs
 logs
 *.log
