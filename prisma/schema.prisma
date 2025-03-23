@@ -8,20 +8,32 @@ datasource db {
 }
 
 model User {
-  id  String  @id @unique
-  tos Boolean @default(false)
-
-  roleplayReceived RoleplayCommand[] @relation("RoleplayReceived")
-  roleplayGiven    RoleplayCommand[] @relation("RoleplayGiven")
+  bots      Bot[] /* User Bots                   */
+  user_id   String   @id @unique /* UserId                      */
+  createdAt DateTime @default(now()) /* User Joined Date            */
 }
 
-model RoleplayCommand {
-  uuid String @id @unique @default(uuid())
+model Bot {
+  botId       String   @unique /* Bot ID                      */
+  userId      String /* Developer ID                */
+  invite      Int      @default(0) /* Invite Perms                */
+  createdAt   DateTime @default(now()) /* Date Added                  */
+  library     String   @default("Unknown") /* Bot library                 */
+  description String   @default("N/A") /* Bot Description             */
+  prefix      String   @default("/") /* Bot Prefix                  */
+  botBanned   Boolean  @default(false) /* If Bot is banned            */
+  botAdded    Boolean  @default(false) /* If Bot is approved          */
+  botAwaiting Boolean  @default(false) /* If Bot is awaiting approval */
 
-  type     Int
-  userId   String
-  targetId String
+  user User @relation(fields: [userId], references: [user_id], onUpdate: Cascade, onDelete: Cascade)
 
-  receiver User @relation("RoleplayGiven", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplier User @relation("RoleplayReceived", fields: [targetId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  @@id([botId])
+}
+
+model Thread {
+  threadId   String   @id /* Id of the thread                   */
+  userId     String   @unique /* User who own the thread            */
+  botId      String   @unique /* The bot of which the thread is for */
+  createdAt  DateTime @default(now()) /* Date Created                       */
+  lastActive DateTime @default(now()) /* Last activity                      */
 }
