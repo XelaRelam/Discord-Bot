@@ -6,7 +6,7 @@ jobs:
     permissions:
       actions: write
       repository-projects: write
-      administration: write
+      contents: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
