@@ -1,3 +1,4 @@
+import { logger } from '@/utils';
 import { Client } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
@@ -15,9 +16,9 @@ export const loadEvents = async (client: Client) => {
       } else {
         client.on(event.name, (...args) => event.execute(...args));
       }
-      console.log(`Loaded event: ${event.name}`);
+      logger.info(`Loaded event: ${event.name}`);
     } else {
-      console.warn(`Skipping invalid event file: ${file}`);
+      logger.warn(`Skipping invalid event file: ${file}`);
     }
   }
 };

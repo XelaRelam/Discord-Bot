@@ -1,4 +1,5 @@
 import { ExtendedClient } from '@/types/extendedClient';
+import { logger } from '@/utils';
 import fs from 'fs';
 import path from 'path';
 
@@ -17,13 +18,13 @@ export const loadCommands = async (client: ExtendedClient) => {
         const command = (await import(commandPath)).default;
         if (command && command.data && command.execute) {
           client.commands.set(command.data.name, command);
-          console.log(`Loaded command: ${command.data.name}`);
+          logger.info(`Loaded command: ${command.data.name}`);
         } else {
-          console.warn(`Skipping invalid command file: ${file}`);
+          logger.warn(`Skipping invalid command file: ${file}`);
         }
       }
     } else if (folder === 'index.ts') {
-      console.warn(`Skipping invalid command file: ${folder}`);
+      logger.warn(`Skipping invalid command file: ${folder}`);
     }
   }
 };

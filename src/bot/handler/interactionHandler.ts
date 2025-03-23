@@ -1,4 +1,5 @@
 import { ExtendedClient } from '@/types/extendedClient';
+import { logger } from '@/utils';
 import { Client, Interaction } from 'discord.js';
 
 export const handleInteraction = async (client: ExtendedClient, interaction: Interaction) => {
@@ -6,15 +7,15 @@ export const handleInteraction = async (client: ExtendedClient, interaction: Int
 
   const command = client.commands.get(interaction.commandName);
   if (!command) {
-    console.warn(`Command not found: ${interaction.commandName}`);
+    logger.warn(`Command not found: ${interaction.commandName}`);
     return;
   }
 
   try {
     await command.execute(interaction);
-    console.log(`Executed command: ${interaction.commandName}`);
+    logger.info(`Executed command: ${interaction.commandName}`);
   } catch (error) {
-    console.error(`Error executing command: ${interaction.commandName}`, error);
+    logger.error(`Error executing command: ${interaction.commandName}`, error);
     await interaction.reply({ content: 'There was an error executing this command.', ephemeral: true });
   }
 };

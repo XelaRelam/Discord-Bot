@@ -3,6 +3,7 @@ import { GatewayIntentBits } from 'discord.js';
 import { botConfig } from '../config/botConfig';
 import { loadEvents } from './handler/eventHandler';
 import { loadCommands } from './handler/commandHandler';
+import { logger } from '@/utils';
 
 const client = new ExtendedClient({
   intents: [
@@ -18,7 +19,7 @@ client.once('ready', () => {
     client.user.setActivity(botConfig.activity.name, {
       type: botConfig.activity.type,
     });
-    console.log(`Logged in as ${client.user.tag}!`);
+    logger.info(`Logged in as ${client.user.tag}!`);
   }
 });
 
@@ -28,5 +29,5 @@ client.once('ready', () => {
 })();
 
 client.login(botConfig.token).catch((error) => {
-  console.error('Failed to log in:', error);
+  logger.error('Failed to log in:', error);
 });
