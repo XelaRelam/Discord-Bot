@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.0.0...v1.1.0) (2025-03-23)
+
+
+### Features
+
+* Added README.md ([ae6b670](https://github.com/XelaRelam/Discord-Bot/commit/ae6b670bae5fbbd99b10ae7845c586f45398aa49))
+* Added Slash Command Register. ([4e996b7](https://github.com/XelaRelam/Discord-Bot/commit/4e996b7cbaf17d4937db4932d958a7bb8aa536b1))
+
+
+### Chores
+
+* added cspell words. ([dc3472d](https://github.com/XelaRelam/Discord-Bot/commit/dc3472d342ef360d4f78356275c4662b983a32ab))
+
 ## 1.0.0 (2025-03-23)
 
 
