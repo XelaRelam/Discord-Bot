@@ -1,0 +1,37 @@
+name: Update README Badges
+on:
+  push:
+    paths:
+      - "package.json"
+      - ".github/custom-properties.json"
+  schedule:
+    - cron: "0 0 * * *" # Runs every day at midnight
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Extract Package & License Info
+        run: |
+          DISCORD_JS_VERSION=$(jq -r '.dependencies["discord.js"]' package.json | sed 's/^.*://;s/[",]//g')
+          LICENSE=$(jq -r '.license' .github/custom-properties.json)
+
+          echo "DISCORD_JS_VERSION=$DISCORD_JS_VERSION" >> $GITHUB_ENV
+          echo "LICENSE=$LICENSE" >> $GITHUB_ENV
+
+      - name: Update README Badges
+        run: |
+          sed -i -E "s|(discord.js-).*?-orange|\\1${DISCORD_JS_VERSION}-orange|" README.md
+          sed -i -E "s|(license-).*?-blue|\\1${LICENSE}-blue|" README.md
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add README.md
+          git commit -m "Updated badges with latest dependencies" || exit 0
+          git push
