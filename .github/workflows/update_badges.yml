@@ -29,8 +29,8 @@ jobs:
           sed -i -E "s|(license-).*?-blue|\\1${LICENSE}-blue|" README.md
 
       - name: Commit and Push Changes
-        env: 
-          GH_PAT: ${{ secret.GH_PAT }}
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
