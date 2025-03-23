@@ -16,7 +16,7 @@
     "build": "tsc",
     "start": "node -r tsconfig-paths/register dist/bot/index.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node  -r tsconfig-paths/register src/bot/index.ts",
-    "test": "npm run build && node dist/tests/runner",
+    "test": "npm run build && node dist/tests/hello",
     "db": "npx prisma format && npx prisma generate && npx prisma db push"
   },
   "engines": {
@@ -33,7 +33,6 @@
     "path": "^0.12.7",
     "prisma": "^6.5.0",
     "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
@@ -44,7 +43,9 @@
     "commit-and-tag-version": "^12.5.0",
     "eslint": "^9.17.0",
     "eslint-define-config": "^2.1.0",
-    "pidusage": "^4.0.0"
+    "pidusage": "^4.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "winston": "^3.17.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
