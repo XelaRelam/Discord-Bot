@@ -13,17 +13,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    allow:
-      - dependency-name: "discord.js"
-      - dependency-name: "typescript"
-      - dependency-name: "node.js"
-      - dependency-name: "dotenv"
-      - dependency-name: "axios"
-      - dependency-name: "commit-and-tag-version"
-      - dependency-name: "ts-node"
-      - dependency-name: "tsconfig-paths"
-      - dependency-name: "eslint"
-      - dependency-name: "pidusage"
     commit-message:
       prefix: "npm"
       prefix-development: "npm dev"
