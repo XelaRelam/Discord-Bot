@@ -1,12 +1,31 @@
-name: Read Custom Properties
+name: Update GitHub Custom Properties
 on: push
 jobs:
-  read-properties:
+  update-properties:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      repository-projects: write
+      administration: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Read Custom Properties
         run: |
-          cat .github/custom-properties.json
+          echo "BOT_NAME=$(jq -r '.botName' .github/custom-properties.json)" >> $GITHUB_ENV
+          echo "PRIMARY_LANGUAGE=$(jq -r '.primaryLanguage' .github/custom-properties.json)" >> $GITHUB_ENV
+          echo "MINIMUM_NODE_VERSION=$(jq -r '.minimumNodeVersion' .github/custom-properties.json)" >> $GITHUB_ENV
+          echo "COMMUNITY_STATUS=$(jq -r '.communityStatus' .github/custom-properties.json)" >> $GITHUB_ENV
+          echo "LICENSE=$(jq -r '.license' .github/custom-properties.json)" >> $GITHUB_ENV
+
+      - name: Update GitHub Custom Properties
+        run: |
+          gh api --method PATCH "/repos/${{ github.repository }}" \
+            -F custom_properties[botName]="$BOT_NAME" \
+            -F custom_properties[primaryLanguage]="$PRIMARY_LANGUAGE" \
+            -F custom_properties[minimumNodeVersion]="$MINIMUM_NODE_VERSION" \
+            -F custom_properties[communityStatus]="$COMMUNITY_STATUS" \
+            -F custom_properties[license]="$LICENSE"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
