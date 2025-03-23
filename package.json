@@ -25,8 +25,11 @@
   "keywords": [],
   "packageManager": "pnpm@10.6.5",
   "dependencies": {
+    "@discordjs/builders": "^1.10.1",
+    "@discordjs/rest": "^2.4.3",
     "@prisma/client": "^6.5.0",
     "axios": "^1.7.9",
+    "discord-api-types": "^0.37.119",
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.7",
     "nodemon": "^3.1.9",
