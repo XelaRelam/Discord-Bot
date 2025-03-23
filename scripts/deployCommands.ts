@@ -119,9 +119,6 @@ const commands = [
 
 const rest = new REST({ version: '9' }).setToken(token);
 
-/**
- *
- */
 async function deployCommands() {
   try {
     logger.info('Started refreshing application (/) commands.');
