@@ -28,4 +28,4 @@ jobs:
             -F custom_properties[communityStatus]="$COMMUNITY_STATUS" \
             -F custom_properties[license]="$LICENSE"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
