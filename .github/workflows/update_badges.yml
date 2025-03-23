@@ -27,8 +27,9 @@ jobs:
 
       - name: Update README Badges
         run: |
-          sed -i -E "s|(discord.js-).*?-orange|\\1${DISCORD_JS_VERSION}-orange|" README.md
-          sed -i -E "s|(license-).*?-blue|\\1${LICENSE}-blue|" README.md
+          sed -i -E "s|(discord.js-)[^ ]*-orange|\\1${DISCORD_JS_VERSION}-orange|" README.md
+          LICENSE_ESCAPED=$(echo "$LICENSE" | sed 's/-/--/g')
+          sed -i -E "s|(license-).*?-blue|\1${LICENSE_ESCAPED}-blue|" README.md
 
       - name: Commit and Push Changes
         env:
