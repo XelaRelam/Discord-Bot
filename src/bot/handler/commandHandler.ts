@@ -16,9 +16,21 @@ export const loadCommands = async (client: ExtendedClient) => {
       for (const file of commandFiles) {
         const commandPath = path.join(folderPath, file);
         const command = (await import(commandPath)).default;
+
         if (command && command.data && command.execute) {
+          // Store the main command
           client.commands.set(command.data.name, command);
           logger.info(`Loaded command: ${command.data.name}`);
+
+          // Handle subcommands if they exist
+          if (command.data.options) {
+            for (const option of command.data.options) {
+              if (option.type === 1 || option.type === 2) { // 1 = Subcommand, 2 = Subcommand Group
+                client.subcommands.set(`${command.data.name}/${option.name}`, command);
+                logger.info(`Loaded subcommand: ${command.data.name}/${option.name}`);
+              }
+            }
+          }
         } else {
           logger.warn(`Skipping invalid command file: ${file}`);
         }
