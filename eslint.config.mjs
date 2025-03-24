@@ -17,7 +17,8 @@ export default [
     ignores: [
       "*/node_modules/*",
       "*dist/**/*.d.ts",
-      "./.github/*"
+      "./.github/*",
+      "scripts/*"
     ],
     files: [
       "**/*.ts"

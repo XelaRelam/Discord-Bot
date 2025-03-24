@@ -28,7 +28,7 @@ export default {
   async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
     logger.info(`embed: Initiated`);
     if (!interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages)) {
-      return interaction.reply({ content: 'You do not have permission to use this command.', ephemeral: true });
+      return interaction.reply({ content: 'You do not have permission to use this command.' });
       logger.info(`embed: User declined`);
     }
     logger.info(`embed: success`);
@@ -86,7 +86,7 @@ export default {
 
     // Ensure at least one of `content` or `embeds` is set
     if (!contentParts.length && !hasEmbedContent) {
-      return interaction.reply({ content: 'You must provide at least a message, mention, or embed content.', ephemeral: true });
+      return interaction.reply({ content: 'You must provide at least a message, mention, or embed content.',});
     }
 
     await interaction.reply({
