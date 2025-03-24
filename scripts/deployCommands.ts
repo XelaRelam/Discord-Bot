@@ -105,6 +105,81 @@ const commands = [
         .setRequired(false)
       )
     ),
+  new SlashCommandBuilder().setName('staff').setDescription('Commands only for staff members')
+    .addSubcommand(subCommand => subCommand
+      .setName('embed')
+      .setDescription('Generate a message or embed (staff)')
+      .addStringOption(option => option
+        .setName('message')
+        .setDescription('What should the normal message be.')
+        .setRequired(false)
+      )
+      .addRoleOption(option => option
+        .setName('mention')
+        .setDescription('Which role to mention.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('color')
+        .setDescription('The color of the embed. (default is white)')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('title')
+        .setDescription('The title of the embed.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('author')
+        .setDescription('The embed author (above the title)')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('description')
+        .setDescription('the description of the embed.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('footer')
+        .setDescription('The footer of the embed.')
+        .setRequired(false)
+      )
+      .addBooleanOption(option => option
+        .setName('inline')
+        .setDescription('If the fields should show inline')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('field-one-name')
+        .setDescription('The name of field one.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('field-one-content')
+        .setDescription('The description of field one.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('field-two-name')
+        .setDescription('The name of field two.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('field-two-description')
+        .setDescription('The description of field two.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('field-three-name')
+        .setDescription('The name of field three.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('field-three-description')
+        .setDescription('The description of field three.')
+        .setRequired(false)
+      )
+    ),
   new SlashCommandBuilder().setName('bot-channel').setDescription('Manage your bots thread.')
     .addSubcommand(subCommand => subCommand
       .setName('create')

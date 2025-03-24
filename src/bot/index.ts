@@ -1,9 +1,9 @@
-import { ExtendedClient } from '@/types/extendedClient';
+import { ExtendedClient } from '../types/extendedClient';
 import { GatewayIntentBits } from 'discord.js';
 import { botConfig } from '../config/botConfig';
 import { loadEvents } from './handler/eventHandler';
 import { loadCommands } from './handler/commandHandler';
-import { logger } from '@/utils';
+import { logger } from '../utils';
 
 const client = new ExtendedClient({
   intents: [

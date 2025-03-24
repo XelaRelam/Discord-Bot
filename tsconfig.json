@@ -2,11 +2,8 @@
   "compilerOptions": {
     "target": "ES2021",
     "module": "commonjs",
-    "rootDir": ".",
+    "rootDir": "src",
     "moduleResolution": "node",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
     "outDir": "dist",
     "removeComments": true,
     "resolveJsonModule": true,
@@ -24,9 +21,9 @@
   },
   "include": [
     "src/**/*.ts",
-    "scripts/*"
   ],
   "exclude": [
+    "**/*.d.ts",
     "node_modules",
     "dist",
     ".vscode",

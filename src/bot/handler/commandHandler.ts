@@ -1,5 +1,5 @@
-import { ExtendedClient } from '@/types/extendedClient';
-import { logger } from '@/utils';
+import { ExtendedClient } from '../../types/extendedClient';
+import { logger } from '../../utils';
 import fs from 'fs';
 import path from 'path';
 
@@ -11,7 +11,7 @@ export const loadCommands = async (client: ExtendedClient) => {
     const folderPath = path.join(commandsPath, folder);
 
     if (fs.statSync(folderPath).isDirectory()) {
-      const commandFiles = fs.readdirSync(folderPath).filter((file) => file.endsWith('.ts'));
+      const commandFiles = fs.readdirSync(folderPath).filter((file) => file.endsWith('.js'));
 
       for (const file of commandFiles) {
         const commandPath = path.join(folderPath, file);

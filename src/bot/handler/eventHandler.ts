@@ -1,4 +1,4 @@
-import { logger } from '@/utils';
+import { logger } from '../../utils';
 import { Client } from 'discord.js';
 import fs from 'fs';
 import path from 'path';

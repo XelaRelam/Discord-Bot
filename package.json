@@ -14,8 +14,8 @@
     "lint": "eslint '**/*.{js,ts,tsx}' --cache && git add . && git commit -m 'style: lint'",
     "release": "npx commit-and-tag-version",
     "build": "tsc",
-    "start": "node -r tsconfig-paths/register dist/bot/index.js",
-    "dev": "nodemon --watch src --ext ts --exec ts-node  -r tsconfig-paths/register src/bot/index.ts",
+    "start": "node dist/bot/index.js",
+    "dev": "nodemon --watch src --ext ts --exec ts-node -r src/bot/index.ts",
     "test": "npm run build && node dist/tests/hello",
     "db": "npx prisma format && npx prisma generate && npx prisma db push"
   },
@@ -47,7 +47,6 @@
     "eslint": "^9.17.0",
     "eslint-define-config": "^2.1.0",
     "pidusage": "^4.0.0",
-    "tsconfig-paths": "^4.2.0",
     "winston": "^3.17.0"
   },
   "pnpm": {

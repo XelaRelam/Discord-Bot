@@ -1,5 +1,5 @@
-import { ExtendedClient } from '@/types/extendedClient';
-import { logger } from '@/utils';
+import { ExtendedClient } from '../../types/extendedClient';
+import { logger } from '../../utils';
 import { Client, Interaction } from 'discord.js';
 
 export const handleInteraction = async (client: ExtendedClient, interaction: Interaction) => {
