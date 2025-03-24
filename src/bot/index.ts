@@ -1,5 +1,5 @@
 import { ExtendedClient } from '../types/extendedClient';
-import { GatewayIntentBits } from 'discord.js';
+import { GatewayIntentBits, Partials } from 'discord.js';
 import { botConfig } from '../config/botConfig';
 import { loadEvents } from './handler/eventHandler';
 import { loadCommands } from './handler/commandHandler';
@@ -12,6 +12,15 @@ const client = new ExtendedClient({
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMembers,
   ],
+  partials: [
+    Partials.Channel,
+    Partials.GuildMember,
+    Partials.User,
+    Partials.ThreadMember,
+    Partials.Reaction,
+    Partials.Message,
+    Partials.GuildScheduledEvent
+  ]
 });
 
 client.once('ready', () => {
