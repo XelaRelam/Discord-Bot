@@ -24,15 +24,6 @@ const client = new ExtendedClient({
   ]
 });
 
-client.once('ready', () => {
-  if (client.user) {
-    client.user.setActivity(botConfig.activity.name, {
-      type: botConfig.activity.type,
-    });
-    logger.info(`Logged in as ${client.user.tag}!`);
-  }
-});
-
 (async () => {
   await loadEvents(client);
   await loadCommands(client);
