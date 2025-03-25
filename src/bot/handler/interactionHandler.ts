@@ -12,8 +12,8 @@ export const handleInteraction = async (client: ExtendedClient, interaction: Int
   }
 
   try {
-    await command.execute(interaction);
-    logger.info(`Executed command: ${interaction.commandName}`);
+    await command.execute(interaction, client);
+    logger.debug(`Executed command: ${interaction.commandName}`);
   } catch (error) {
     logger.error(`Error executing command: ${interaction.commandName}`, error);
     await interaction.reply({ content: 'There was an error executing this command.', flags: 'Ephemeral'});

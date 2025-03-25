@@ -18,11 +18,9 @@ export const loadCommands = async (client: ExtendedClient) => {
         const command = (await import(commandPath)).default;
 
         if (command && command.data && command.execute) {
-          // Store the main command
           client.commands.set(command.data.name, command);
           logger.info(`Loaded command: ${command.data.name}`);
 
-          // Handle subcommands if they exist
           if (command.data.options) {
             for (const option of command.data.options) {
               if (option.type === 1 || option.type === 2) { // 1 = Subcommand, 2 = Subcommand Group

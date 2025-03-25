@@ -179,6 +179,16 @@ const commands = [
         .setDescription('The description of field three.')
         .setRequired(false)
       )
+      .addBooleanOption(option => option
+        .setName('thumbnail')
+        .setDescription('If true will show the server icon as thumbnail.')
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('image')
+        .setDescription('An image to display in the embed or message.')
+        .setRequired(false)
+      )
     ),
   new SlashCommandBuilder().setName('bot-channel').setDescription('Manage your bots thread.')
     .addSubcommand(subCommand => subCommand

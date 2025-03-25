@@ -1,6 +1,7 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ColorResolvable } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ColorResolvable, AttachmentBuilder } from 'discord.js';
 import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
+import { colorRegex } from '../../types/regex';
 
 export default {
   data: new SlashCommandBuilder()
@@ -23,15 +24,18 @@ export default {
       .addStringOption(option => option.setName('field-two-description').setDescription('The description of field two.').setRequired(false))
       .addStringOption(option => option.setName('field-three-name').setDescription('The name of field three.').setRequired(false))
       .addStringOption(option => option.setName('field-three-description').setDescription('The description of field three.').setRequired(false))
+      .addBooleanOption(option => option.setName('thumbnail').setDescription('If true will show the server icon as thumbnail.').setRequired(false))
+      .addStringOption(option => option.setName('image').setDescription('An image to display in the embed or message.').setRequired(false))
     ),
 
   async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
-    logger.info(`embed: Initiated`);
+    logger.debug(`embed: Initiated`);
     if (!interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages)) {
       return interaction.reply({ content: 'You do not have permission to use this command.' });
-      logger.info(`embed: User declined`);
+      logger.debug(`embed: User declined`);
     }
-    logger.info(`embed: success`);
+
+    logger.debug(`embed: success`);
     const message = interaction.options.getString('message');
     const mention = interaction.options.getRole('mention');
     const color = interaction.options.getString('color') || '#FFFFFF';
@@ -40,20 +44,26 @@ export default {
     const description = interaction.options.getString('description');
     const footer = interaction.options.getString('footer');
     const inline = interaction.options.getBoolean('inline') ?? false;
+    const thumbnail = interaction.options.getBoolean('thumbnail') ?? false;
+    const image = interaction.options.getString('image');
 
     // Validate color (must be a hex code or Discord color string)
-    const colorRegex = /^#([0-9A-F]{6})$/i;
     const validColor = colorRegex.test(color) ? (color as ColorResolvable) : '#FFFFFF';
 
-    // Create fields dynamically
-    const fields = [];
-    for (let i = 1; i <= 3; i++) {
-      const name = interaction.options.getString(`field-${i}-name`);
-      const value = interaction.options.getString(`field-${i}-description`);
-      if (name && value) {
-        fields.push({ name, value, inline });
+    const fields = [
+      {
+        name: interaction.options.getString('field-one-name') ?? '',
+        value: interaction.options.getString('field-one-content') ?? '',
+      },
+      {
+        name: interaction.options.getString('field-two-name') ?? '',
+        value: interaction.options.getString('field-two-description') ?? '', // Notice "description" for field two
+      },
+      {
+        name: interaction.options.getString('field-three-name') ?? '',
+        value: interaction.options.getString('field-three-description') ?? '',
       }
-    }
+    ].filter(f => f.name && f.value); // Remove empty fields
 
     // Check if an embed is needed
     const embed = new EmbedBuilder().setColor(validColor);
@@ -74,25 +84,59 @@ export default {
       embed.setFooter({ text: footer });
       hasEmbedContent = true;
     }
-    if (fields.length) {
-      embed.addFields(fields);
+    if (fields.length > 0) {
+      embed.addFields(fields.map(f => ({ name: f.name, value: f.value, inline })));
       hasEmbedContent = true;
     }
 
+    if (thumbnail && interaction.guild?.iconURL()) {
+      embed.setThumbnail(interaction.guild.iconURL({ extension: 'webp', size: 1024 })!);
+      hasEmbedContent = true;
+    }
+
+    let attachment;
+    if (image) {
+      const isValidImageURL = image.match(/\.(jpeg|jpg|gif|png|webp)$/i);
+      if (isValidImageURL) {
+        if (hasEmbedContent) {
+          embed.setImage(image);
+          hasEmbedContent = true;
+        } else {
+          attachment = new AttachmentBuilder(image);
+        }
+      } else {
+        return interaction.reply({ content: 'The provided image URL is invalid.', flags: 'Ephemeral'});
+      }
+      if (hasEmbedContent) {
+        embed.setImage(image);
+        hasEmbedContent = true;
+      } else {
+        // Here if its a normal message, than we attach to normal message
+      }
+    }
     // Build response
     const contentParts: string[] = [];
     if (mention) contentParts.push(`${mention}`);
     if (message) contentParts.push(message);
 
-    // Ensure at least one of `content` or `embeds` is set
-    if (!contentParts.length && !hasEmbedContent) {
+    if (!contentParts.length && !hasEmbedContent && !attachment) {
       return interaction.reply({ content: 'You must provide at least a message, mention, or embed content.',});
     }
 
-    await interaction.reply({
+    const replyOptions: any = {
       content: contentParts.length ? contentParts.join(' ') : undefined,
-      embeds: hasEmbedContent ? [embed] : [],
       allowedMentions: { parse: mention ? ['roles'] : [] }
-    });
+    };
+
+    if (attachment) {
+      replyOptions.files = [attachment];
+    }
+
+    if (hasEmbedContent) {
+      replyOptions.embeds = [embed];
+    }
+
+    await interaction.reply(replyOptions);
+
   }
 };
