@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.1.0...v1.2.0) (2025-03-25)
+
+
+### Features
+
+* Added embed command. ([2086a2a](https://github.com/XelaRelam/Discord-Bot/commit/2086a2a06da00f5ac9001731fe8e126f33260d5f))
+* Added embed command. ([841e806](https://github.com/XelaRelam/Discord-Bot/commit/841e806e3d352ee150c78c650961a5d518d38824))
+* Added embed command. ([19e097a](https://github.com/XelaRelam/Discord-Bot/commit/19e097a3278e2d2411ef877e1d4a629a5698b3ee))
+* Added embed command. ([247007b](https://github.com/XelaRelam/Discord-Bot/commit/247007b1005b8975af6d56ec694cb4a72395cfa1))
+* Added Eval command. ([7d38bf1](https://github.com/XelaRelam/Discord-Bot/commit/7d38bf16954ab4f6861a4f8110324e2b3044b2d9))
+* Added interactionCreate event. ([79c820d](https://github.com/XelaRelam/Discord-Bot/commit/79c820d504b5c63bd0bfd9cb05c292924faa29ff))
+* Added Regex file. ([14caa43](https://github.com/XelaRelam/Discord-Bot/commit/14caa43921636ac52143007848f82d20f1e4f2e7))
+* Added Staff Embed Command ([7c28415](https://github.com/XelaRelam/Discord-Bot/commit/7c284151831bf0aada39244de01ba42fc59bab46))
+
 ## [1.1.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.0.0...v1.1.0) (2025-03-23)
 
 
