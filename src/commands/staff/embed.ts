@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ColorResolvable, AttachmentBuilder } from 'discord.js';
 import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
-import { colorRegex } from '../../types/regex';
+import { colorRegex, isValidImageURL } from '../../types/regex';
 
 export default {
   data: new SlashCommandBuilder()
@@ -96,7 +96,6 @@ export default {
 
     let attachment;
     if (image) {
-      const isValidImageURL = image.match(/\.(jpeg|jpg|gif|png|webp)$/i);
       if (isValidImageURL) {
         if (hasEmbedContent) {
           embed.setImage(image);
