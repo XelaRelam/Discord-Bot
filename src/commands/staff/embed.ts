@@ -28,7 +28,7 @@ export default {
       .addStringOption(option => option.setName('image').setDescription('An image to display in the embed or message.').setRequired(false))
     ),
 
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
+  async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
     logger.debug(`embed: Initiated`);
     const ROLE_ID = '1354193758010212423';
 

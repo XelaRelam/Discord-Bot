@@ -12,13 +12,13 @@ export const loadEvents = async (client: Client) => {
     const event = (await import(eventPath)).default;
     if (event && event.name && event.execute) {
       if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args));
+        client.once(event.name, event.execute.bind(null, client));
       } else {
-        client.on(event.name, (...args) => event.execute(...args));
+        client.on(event.name, event.execute.bind(null, client));
       }
-      logger.info(`Loaded event: ${event.name}`);
+      logger.info(`✅ | Loaded event: ${event.name}`);
     } else {
-      logger.warn(`Skipping invalid event file: ${file}`);
+      logger.warn(`⚠️ | Skipping invalid event file: ${file}`);
     }
   }
 };

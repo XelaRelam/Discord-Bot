@@ -12,7 +12,7 @@ export default {
       .setRequired(true)
     ),
 
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
+  async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
     logger.debug(`eval: Initiated`);
 
     const allowedUserIds = ['705306248538488947', '1152694512829866065'];

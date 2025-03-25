@@ -19,22 +19,22 @@ export const loadCommands = async (client: ExtendedClient) => {
 
         if (command && command.data && command.execute) {
           client.commands.set(command.data.name, command);
-          logger.info(`Loaded command: ${command.data.name}`);
+          logger.info(`✅ | Loaded command: ${command.data.name}`);
 
           if (command.data.options) {
             for (const option of command.data.options) {
               if (option.type === 1 || option.type === 2) { // 1 = Subcommand, 2 = Subcommand Group
                 client.subcommands.set(`${command.data.name}/${option.name}`, command);
-                logger.info(`Loaded subcommand: ${command.data.name}/${option.name}`);
+                logger.info(`✅ | Loaded subcommand: ${command.data.name}/${option.name}`);
               }
             }
           }
         } else {
-          logger.warn(`Skipping invalid command file: ${file}`);
+          logger.warn(`⚠️ | Skipping invalid command file: ${file}`);
         }
       }
     } else if (folder === 'index.ts') {
-      logger.warn(`Skipping invalid command file: ${folder}`);
+      logger.warn(`⚠️ | Skipping invalid command file: ${folder}`);
     }
   }
 };

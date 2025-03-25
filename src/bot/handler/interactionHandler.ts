@@ -7,15 +7,16 @@ export const handleInteraction = async (client: ExtendedClient, interaction: Int
 
   const command = client.commands.get(interaction.commandName);
   if (!command) {
-    logger.warn(`Command not found: ${interaction.commandName}`);
+    logger.warn(`⚠️ | Command not found: ${interaction.commandName}`);
     return;
   }
 
   try {
-    await command.execute(interaction, client);
-    logger.debug(`Executed command: ${interaction.commandName}`);
+    await command.execute(client, interaction);
+    logger.debug(`❔ | Executed command: ${interaction.commandName}`);
   } catch (error) {
-    logger.error(`Error executing command: ${interaction.commandName}`, error);
+    logger.error(`❌ | Error executing command: ${interaction.commandName}`, error);
+    console.error( error );
     await interaction.reply({ content: 'There was an error executing this command.', flags: 'Ephemeral'});
   }
 };
