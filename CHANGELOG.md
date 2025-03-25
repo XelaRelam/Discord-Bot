@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.2.0...v1.3.0) (2025-03-25)
+
+
+### Features
+
+* Added onReady event. ([8f0d8e3](https://github.com/XelaRelam/Discord-Bot/commit/8f0d8e32f9b94f2c1559e5679df812a252f8a4a8))
+* Added starboard. ([2efa9bb](https://github.com/XelaRelam/Discord-Bot/commit/2efa9bb19109231f17bbe88cc405ca7af517fef5))
+
+
+### Bug Fixes
+
+* Embed now uses role instead of perms. ([0e48900](https://github.com/XelaRelam/Discord-Bot/commit/0e489002bfdada858d5e3547412cce093809c79d))
+
+
+### Code Refactoring
+
+* Made types input consist and have client always first. ([e1df533](https://github.com/XelaRelam/Discord-Bot/commit/e1df5334c9125701550066625a4cefeb1119aadd))
+
 ## [1.2.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.1.0...v1.2.0) (2025-03-25)
 
 ### Features
