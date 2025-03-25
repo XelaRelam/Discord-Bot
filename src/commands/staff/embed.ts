@@ -107,13 +107,8 @@ export default {
       } else {
         return interaction.reply({ content: 'The provided image URL is invalid.', flags: 'Ephemeral'});
       }
-      if (hasEmbedContent) {
-        embed.setImage(image);
-        hasEmbedContent = true;
-      } else {
-        // Here if its a normal message, than we attach to normal message
-      }
     }
+
     // Build response
     const contentParts: string[] = [];
     if (mention) contentParts.push(`${mention}`);
