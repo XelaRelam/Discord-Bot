@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ColorResolvable, AttachmentBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ColorResolvable, AttachmentBuilder, GuildMember } from 'discord.js';
 import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
 import { colorRegex, isValidImageURL } from '../../types/regex';
@@ -30,9 +30,17 @@ export default {
 
   async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
     logger.debug(`embed: Initiated`);
-    if (!interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages)) {
-      return interaction.reply({ content: 'You do not have permission to use this command.' });
+    const ROLE_ID = '1354193758010212423';
+
+    if (!interaction.member || !(interaction.member instanceof GuildMember)) {
+      return interaction.reply({ content: 'Could not verify your roles.', flags: 'Ephemeral' });
+    }
+
+    const hasRole = interaction.member.roles.cache.has(ROLE_ID);
+
+    if (!hasRole) {
       logger.debug(`embed: User declined`);
+      return interaction.reply({ content: 'You do not have permission to use this command.', flags: 'Ephemeral' });
     }
 
     logger.debug(`embed: success`);
