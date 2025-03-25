@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file. See [commit
 
 * Made types input consist and have client always first. ([e1df533](https://github.com/XelaRelam/Discord-Bot/commit/e1df5334c9125701550066625a4cefeb1119aadd))
 
-## [1.2.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.1.0...v1.2.0) (2025-03-25)
+## [1.2.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.1.0...v1.2.0) (2025-03-24)
 
 ### Features
 
