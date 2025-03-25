@@ -37,3 +37,13 @@ model Thread {
   createdAt  DateTime @default(now()) /* Date Created                       */
   lastActive DateTime @default(now()) /* Last activity                      */
 }
+
+model Starboard {
+  id          String   @id @default(cuid()) // Unique identifier
+  messageId   String   @unique // Original message ID
+  starboardId String? // Starboard message ID (null if not posted yet)
+  channelId   String // The channel where the original message was sent
+  authorId    String // Message author
+  starsCount  Int      @default(0) // Current star count
+  createdAt   DateTime @default(now())
+}

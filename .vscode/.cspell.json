@@ -11,6 +11,7 @@
     "aoijs",
     "axios",
     "BDFD",
+    "cuid",
     "discordgo",
     "discordia",
     "discordphp",
