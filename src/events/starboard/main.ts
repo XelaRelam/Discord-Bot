@@ -4,7 +4,7 @@ import { MessageReaction, PartialMessageReaction, PartialUser, TextChannel, User
 import { logger } from '../../utils';
 
 const prisma = new PrismaClient();
-const STAR_THRESHOLD = 1;
+const STAR_THRESHOLD = 3;
 const STARBOARD_CHANNEL_ID = '1252185956291842181';
 
 export const handleStarboard = async (
@@ -97,5 +97,6 @@ export const handleStarboard = async (
     }
   } catch (error) {
     logger.error('Error in starboard system:', error);
+    console.log(error);
   }
 };

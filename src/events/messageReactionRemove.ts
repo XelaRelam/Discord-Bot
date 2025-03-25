@@ -5,11 +5,11 @@ import { logger } from '../utils';
 
 export default {
   name: Events.MessageReactionRemove,
-  async execute(reaction: MessageReaction, user: User, client: ExtendedClient) {
+  async execute(client: ExtendedClient, reaction: MessageReaction, user: User) {
     try {
       if (reaction.partial) await reaction.fetch();
       if (reaction.message.partial) await reaction.message.fetch();
-      logger.info(`Removed a reaction ${reaction.emoji.name}`);
+      logger.debug(`Removed a reaction ${reaction.emoji.name}`);
 
       if (user.bot) return;
 
