@@ -8,7 +8,7 @@ export default {
   async execute(interaction: Interaction) {
     const client = interaction.client as ExtendedClient;
 
-    logger.info(`Received interaction: Type=${interaction.type} from ${interaction.user.tag}`);
+    logger.debug(`Received interaction: Type=${interaction.type} from ${interaction.user.tag}`);
 
     await handleInteraction(client, interaction);
   }
