@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.3.0...v1.4.0) (2025-03-26)
+
+
+### Features
+
+* Added A Welcome System. ([d3715f7](https://github.com/XelaRelam/Discord-Bot/commit/d3715f74cb2c9b54a9f68b5ddf61dbfc465c12ca))
+* Added stickyPost for scripts. ([28766c0](https://github.com/XelaRelam/Discord-Bot/commit/28766c031273e89c4d53390243186e0af233580b))
+
+
+### Chores
+
+* Cleanup of unused files. ([cc3de40](https://github.com/XelaRelam/Discord-Bot/commit/cc3de40f1af7ee7c0f80320939d7040c0bd81a85))
+
 ## [1.3.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.2.0...v1.3.0) (2025-03-25)
 
 
