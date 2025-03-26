@@ -7,7 +7,7 @@ export default {
   name: Events.MessageCreate,
   async execute(client: ExtendedClient, message: Message) {
     try {
-      logger.info(`got ${message.content} in ${message.channelId}`);
+      logger.debug(`got ${message.content} in ${message.channelId}`);
       if (message.channelId === '1266455854811578379') {
         await searchScript(client, message);
       }
