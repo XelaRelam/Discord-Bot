@@ -47,3 +47,9 @@ model Starboard {
   starsCount  Int      @default(0) // Current star count
   createdAt   DateTime @default(now())
 }
+
+model StickyMessage {
+  id        Int    @id @default(autoincrement())
+  channelID String @unique
+  messageID String
+}
