@@ -3,38 +3,55 @@ import { logger } from '../../utils';
 import fs from 'fs';
 import path from 'path';
 
-export const loadCommands = async (client: ExtendedClient) => {
-  const commandsPath = path.join(__dirname, '../../commands');
+const loadCommand = async (client: ExtendedClient, commandPath: string) => {
+  const command = (await import(commandPath)).default;
+
+  if (!command || !command.data || !command.execute) {
+    logger.warn(`⚠️ | Skipping invalid command file: ${commandPath}`);
+    return;
+  }
+
+  client.commands.set(command.data.name, command);
+  logger.info(`✅ | Loaded command: ${command.data.name}`);
+
+  loadSubcommands(client, command);
+};
+
+const loadSubcommands = (client: ExtendedClient, command: any) => {
+  if (!command.data.options) return;
+
+  for (const option of command.data.options) {
+    if (option.type === 1 || option.type === 2) { // 1 = Subcommand, 2 = Subcommand Group
+      client.subcommands.set(`${command.data.name}/${option.name}`, command);
+      logger.info(`✅ | Loaded subcommand: ${command.data.name}/${option.name}`);
+    }
+  }
+};
+
+const loadCommandFiles = async (client: ExtendedClient, folderPath: string) => {
+  const commandFiles = fs.readdirSync(folderPath).filter((file) => file.endsWith('.js'));
+
+  for (const file of commandFiles) {
+    const commandPath = path.join(folderPath, file);
+    await loadCommand(client, commandPath);
+  }
+};
+
+const loadCommandFolders = async (client: ExtendedClient, commandsPath: string) => {
   const commandFolders = fs.readdirSync(commandsPath);
 
   for (const folder of commandFolders) {
     const folderPath = path.join(commandsPath, folder);
 
     if (fs.statSync(folderPath).isDirectory()) {
-      const commandFiles = fs.readdirSync(folderPath).filter((file) => file.endsWith('.js'));
-
-      for (const file of commandFiles) {
-        const commandPath = path.join(folderPath, file);
-        const command = (await import(commandPath)).default;
-
-        if (command && command.data && command.execute) {
-          client.commands.set(command.data.name, command);
-          logger.info(`✅ | Loaded command: ${command.data.name}`);
-
-          if (command.data.options) {
-            for (const option of command.data.options) {
-              if (option.type === 1 || option.type === 2) { // 1 = Subcommand, 2 = Subcommand Group
-                client.subcommands.set(`${command.data.name}/${option.name}`, command);
-                logger.info(`✅ | Loaded subcommand: ${command.data.name}/${option.name}`);
-              }
-            }
-          }
-        } else {
-          logger.warn(`⚠️ | Skipping invalid command file: ${file}`);
-        }
-      }
-    } else if (folder === 'index.ts') {
+      await loadCommandFiles(client, folderPath);
+    } else if (folder !== 'index.ts') {
       logger.warn(`⚠️ | Skipping invalid command file: ${folder}`);
     }
   }
+};
+
+export const loadCommands = async (client: ExtendedClient) => {
+  const commandsPath = path.join(__dirname, '../../commands');
+  await loadCommandFolders(client, commandsPath);
 };
