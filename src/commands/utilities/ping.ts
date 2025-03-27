@@ -8,7 +8,7 @@ export default {
     .setName('ping')
     .setDescription('Replies with Pong!'),
 
-  async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient) {
+  async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
     if (!client.ws) {
       await interaction.reply('Bot is not fully connected to Discord.');
       logger.debug('got /ping Bot is not fully connected to Discord.');

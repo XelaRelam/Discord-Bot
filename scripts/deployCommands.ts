@@ -18,7 +18,7 @@ const commands = [
     .addSubcommand(subcommand => subcommand
       .setName('add')
       .setDescription('Request to add your bot to the server.')
-      .addIntegerOption(option => option
+      .addStringOption(option => option
         .setName('bot-id')
         .setDescription('The ID of your bot')
         .setRequired(true)
