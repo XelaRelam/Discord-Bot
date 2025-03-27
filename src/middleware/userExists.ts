@@ -8,7 +8,6 @@ export const userExists = async (client: Client, userID: string): Promise<boolea
     await client.users.fetch(userID, { force: true });
     return true;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };

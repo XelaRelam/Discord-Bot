@@ -112,14 +112,14 @@ export default {
         return interaction.editReply({ content: 'This command is disabled at this moment.' });
       }
 
+      if (!(await userExists(client, interaction.options.getString('bot-id') || '0'))) {
+        return interaction.editReply({ content: `I couldn't find a bot account.`});
+      }
+
       let guild = client.guilds.fetch('1235165357879328870');
       let botID = interaction.options.getString('bot-id') || client.user.id;
       let botInfo = client.users.fetch(botID);
       const description = interaction.options.getString(`description`);
-
-      if (!(await userExists(client, botID))) {
-        return interaction.editReply({ content: `I couldn't find a bot account.`});
-      }
 
       let bot = client.users.fetch(botID);
       if (!(await bot).bot) {
