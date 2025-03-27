@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.5.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.4.0...v1.5.0) (2025-03-27)
+
+
+### Features
+
+* Added Bot Add command. ([976182d](https://github.com/XelaRelam/Discord-Bot/commit/976182d387cc5dc06d8910dbf051d7606b8f2a3f))
+* Database botData Update file. ([ca2eb6e](https://github.com/XelaRelam/Discord-Bot/commit/ca2eb6e77f2a62cb41d7b448072c9389e9efeeee))
+* Function to check Perms. ([4847498](https://github.com/XelaRelam/Discord-Bot/commit/4847498f2cb9578359936c3b2fb4ea14133d8706))
+* function to see if user exists. ([18bb908](https://github.com/XelaRelam/Discord-Bot/commit/18bb908e7482bd9c2d13f1c902c234036b3ec826))
+
+
+### Bug Fixes
+
+* Add Bot command. ([a8a6a22](https://github.com/XelaRelam/Discord-Bot/commit/a8a6a2205733d1de8bd4c3fb83ab381efb5e8800))
+* Added user now works fully, no errors. (i hope) ([91b9fab](https://github.com/XelaRelam/Discord-Bot/commit/91b9fab61e3de9aea288ec173513dd35a49a902c))
+
+
+### Code Refactoring
+
+* Code Climate. ([7d30254](https://github.com/XelaRelam/Discord-Bot/commit/7d302543246ff0ff502c38fa180f78c92c31ba18))
+
 ## [1.4.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.3.0...v1.4.0) (2025-03-26)
 
 
