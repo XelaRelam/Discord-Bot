@@ -7,17 +7,19 @@ export const upsertUserData = async (userId: string, userData: {
   hasAwaitedBot?: boolean;
 }) => {
   try {
+    const updateData: any = {};
+
+    if (userData.userBanned !== undefined) updateData.userBanned = userData.userBanned;
+    if (userData.hasAwaitedBot !== undefined) updateData.hasAwaitedBot = userData.hasAwaitedBot;
+
     const updatedUser = await prisma.user.upsert({
       where: { user_id: userId },
-      update: {
-        userBanned: userData.userBanned ?? false,
-        hasAwaitedBot: userData.hasAwaitedBot ?? false,
-      },
+      update: updateData,
       create: {
         user_id: userId,
         userBanned: userData.userBanned ?? false,
         hasAwaitedBot: userData.hasAwaitedBot ?? false,
-      }
+      },
     });
 
     return { success: true, message: "User data updated or created successfully.", updatedUser };
