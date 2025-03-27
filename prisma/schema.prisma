@@ -8,23 +8,24 @@ datasource db {
 }
 
 model User {
-  bots          Bot[] /* User Bots                   */
-  user_id       String   @id @unique /* UserId                      */
-  createdAt     DateTime @default(now()) /* User Joined Date            */
-  userBanned    Boolean  @default(false) /* If Bot is banned            */
+  bots          Bot[] /* User's Bots */
+  user_id       String   @id @unique /* UserId */
+  createdAt     DateTime @default(now()) /* User Joined Date */
+  userBanned    Boolean  @default(false) /* If Bot is banned */
   hasAwaitedBot Boolean  @default(false) /* If user has a bot in queue */
 }
 
 model Bot {
-  botId       String   @unique /* Bot ID                      */
-  userId      String /* Developer ID                */
-  invite      Int      @default(0) /* Invite Perms                */
-  createdAt   DateTime @default(now()) /* Date Added                  */
-  library     String   @default("Unknown") /* Bot library                 */
-  description String   @default("N/A") /* Bot Description             */
-  prefix      String   @default("/") /* Bot Prefix                  */
-  botBanned   Boolean  @default(false) /* If Bot is banned            */
-  botAdded    Boolean  @default(false) /* If Bot is approved          */
+  botId       String   @unique /* Bot ID */
+  userId      String /* Developer ID */
+  invite      Int      @default(0) /* Invite Permissions */
+  createdAt   DateTime @default(now()) /* Date Added */
+  addedAt     DateTime /* Date added to the server */
+  library     String   @default("Unknown") /* Bot library */
+  description String   @default("N/A") /* Bot Description */
+  prefix      String   @default("/") /* Bot Prefix */
+  botBanned   Boolean  @default(false) /* If Bot is banned */
+  botAdded    Boolean  @default(false) /* If Bot is approved */
   botAwaiting Boolean  @default(false) /* If Bot is awaiting approval */
 
   user User @relation(fields: [userId], references: [user_id], onUpdate: Cascade, onDelete: Cascade)

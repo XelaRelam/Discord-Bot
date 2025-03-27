@@ -3,19 +3,23 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const upsertBotData = async (userId: string, botId: string, botData: {
-  awaited: boolean;
+  awaited: boolean,
+  added?: boolean,
   invite?: number,
   library?: string,
   description?: string,
-  prefix?: string
+  prefix?: string,
+  addedAt?: Date
 }) => {
   try {
+    // Ensure the user exists
     await prisma.user.upsert({
       where: { user_id: userId },
-      update: {},
-      create: { user_id: userId }
+      update: {}, // No update to user data, just ensure user exists
+      create: { user_id: userId } // Create user if it doesn't exist
     });
 
+    // Upsert bot data
     await prisma.bot.upsert({
       where: { botId },
       update: {
@@ -23,7 +27,9 @@ export const upsertBotData = async (userId: string, botId: string, botData: {
         library: botData.library ?? "Unknown",
         description: botData.description ?? "N/A",
         prefix: botData.prefix ?? "/",
-        botAwaiting: botData.awaited ?? false
+        botAwaiting: botData.awaited ?? false,
+        botAdded: botData.added ?? false,
+        addedAt: botData.addedAt ?? new Date() // Make sure `addedAt` has a default if not provided
       },
       create: {
         botId,
@@ -32,7 +38,9 @@ export const upsertBotData = async (userId: string, botId: string, botData: {
         library: botData.library ?? "Unknown",
         description: botData.description ?? "N/A",
         prefix: botData.prefix ?? "/",
-        botAwaiting: botData.awaited ?? false
+        botAwaiting: botData.awaited ?? false,
+        botAdded: botData.added ?? false,
+        addedAt: botData.addedAt ?? new Date() // Ensure `addedAt` has a default if not provided
       }
     });
 

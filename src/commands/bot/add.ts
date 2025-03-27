@@ -4,7 +4,7 @@ import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
 import { EmbedBuilder } from '@discordjs/builders';
 import { botHasEmbedPerms, botHasSendPerms, botHasViewPerms } from '../../middleware/permissions';
-import { upsertBotData } from '../../database/botData';
+import * as database from './../../database';
 import { userExists } from '../../middleware/userExists';
 
 const prisma = new PrismaClient();
@@ -229,7 +229,13 @@ export default {
         awaited: true
       };
 
-      upsertBotData(interaction.user.id, botID, botStats);
+      database.upsertBotData(interaction.user.id, botID, botStats);
+
+      const userData = {
+        hasAwaitedBot: true,
+      };
+      database.upsertUserData(interaction.user.id, userData);
+
       // TO GET THE BOTS OF A USER
       // prisma.bot.findMany({ where: { userId: "123" } })
     };
