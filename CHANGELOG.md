@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file. See [commit
 ### Bug Fixes
 
 * Add Bot command. ([a8a6a22](https://github.com/XelaRelam/Discord-Bot/commit/a8a6a2205733d1de8bd4c3fb83ab381efb5e8800))
-* Added user now works fully, no errors. (i hope) ([91b9fab](https://github.com/XelaRelam/Discord-Bot/commit/91b9fab61e3de9aea288ec173513dd35a49a902c))
+* Added bot now works fully, no errors. (i hope) ([91b9fab](https://github.com/XelaRelam/Discord-Bot/commit/91b9fab61e3de9aea288ec173513dd35a49a902c))
 
 
 ### Code Refactoring
