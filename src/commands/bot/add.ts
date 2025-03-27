@@ -3,7 +3,9 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteracti
 import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
 import { EmbedBuilder } from '@discordjs/builders';
-import { botHasEmbedPerms, botHasSendPerms, botHasViewPerms } from '../../utils/permissions';
+import { botHasEmbedPerms, botHasSendPerms, botHasViewPerms } from '../../middleware/permissions';
+import { upsertBotData } from '../../database/botData';
+import { userExists } from '../../middleware/userExists';
 
 const prisma = new PrismaClient();
 
@@ -103,117 +105,133 @@ export default {
     ),
 
   async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
-    await interaction.deferReply({flags: "Ephemeral"});
+    if (interaction.options.getSubcommand() === 'add') {
+      await interaction.deferReply({flags: "Ephemeral"});
 
-    if (false) {
-      return interaction.editReply({ content: 'This command is disabled at this moment.' });
-    }
+      if (false) {
+        return interaction.editReply({ content: 'This command is disabled at this moment.' });
+      }
 
-    let guild = client.guilds.fetch('1235165357879328870');
-    let botID = interaction.options.getString('bot-id') || client.user.id;
-    let botInfo = client.users.fetch(botID);
-    const description = interaction.options.getString(`description`);
+      let guild = client.guilds.fetch('1235165357879328870');
+      let botID = interaction.options.getString('bot-id') || client.user.id;
+      let botInfo = client.users.fetch(botID);
+      const description = interaction.options.getString(`description`);
 
-    if (botID === client.user.id) {
-      return interaction.editReply({ content: `I couldn't find a bot account.`});
-    }
+      if (!(await userExists(client, botID))) {
+        return interaction.editReply({ content: `I couldn't find a bot account.`});
+      }
 
-    let bot = client.users.fetch(botID);
-    if (!(await bot).bot) {
-      return interaction.editReply({ content: `Could not find this bot.`});
-    }
+      let bot = client.users.fetch(botID);
+      if (!(await bot).bot) {
+        return interaction.editReply({ content: `Could not find this bot.`});
+      }
 
-    let dbBot = await prisma.bot.findUnique({
-      where: { botId: botID },
-    });
-    let dbUser = await prisma.user.findUnique({
-      where: { user_id: interaction.user.id },
-    });
+      let dbBot = await prisma.bot.findUnique({
+        where: { botId: botID },
+      });
+      let dbUser = await prisma.user.findUnique({
+        where: { user_id: interaction.user.id },
+      });
 
-    if (dbBot?.botBanned) {
-      return interaction.editReply({content: `This bot has been banned by a staff member.`});
-    }
+      if (dbBot?.botBanned) {
+        return interaction.editReply({content: `This bot has been banned by a staff member.`});
+      }
 
-    if (dbBot?.botAwaiting) {
-      return interaction.editReply({content: `This bot is already waiting approval, please wait until it is approved or declined.`});
-    }
+      if (dbBot?.botAwaiting) {
+        return interaction.editReply({content: `This bot is already waiting approval, please wait until it is approved or declined.`});
+      }
 
-    if (dbUser?.userBanned) {
-      return interaction.editReply({content: `You have been banned by a staff member.`});
-    }
+      if (dbUser?.userBanned) {
+        return interaction.editReply({content: `You have been banned by a staff member.`});
+      }
 
-    if (dbUser?.hasAwaitedBot) {
-      return interaction.editReply({content: `You already have a bot waiting for approval, try again once that bot is accepted or declined.`});
-    }
+      if (dbUser?.hasAwaitedBot) {
+        return interaction.editReply({content: `You already have a bot waiting for approval, try again once that bot is accepted or declined.`});
+      }
 
-    /**
-     * @description Check if bot can send messages
-     */
-    const staffChannel = client.channels.cache.get('1278051624916353046') as TextChannel;
-    if (!botHasSendPerms(client, staffChannel) || !botHasEmbedPerms(client, staffChannel) || !botHasViewPerms(client, staffChannel)) {
-      return interaction.editReply({content: `Something is wrong with the staff channel, please inform a staff member.`});
-    }
-    const publicChannel = client.channels.cache.get('1235263212497141911') as TextChannel;
-    if (!botHasSendPerms(client, publicChannel) || !botHasEmbedPerms(client, publicChannel) || !botHasViewPerms(client, publicChannel)) {
-      return interaction.editReply({content: `Something is wrong with the announcement channel, please inform a staff member.`});
-    }
+      /**
+       * @description Check if bot can send messages
+       */
+      const staffChannel = client.channels.cache.get('1278051624916353046') as TextChannel;
+      if (!botHasSendPerms(client, staffChannel) || !botHasEmbedPerms(client, staffChannel) || !botHasViewPerms(client, staffChannel)) {
+        return interaction.editReply({content: `Something is wrong with the staff channel, please inform a staff member.`});
+      }
+      const publicChannel = client.channels.cache.get('1235263212497141911') as TextChannel;
+      if (!botHasSendPerms(client, publicChannel) || !botHasEmbedPerms(client, publicChannel) || !botHasViewPerms(client, publicChannel)) {
+        return interaction.editReply({content: `Something is wrong with the announcement channel, please inform a staff member.`});
+      }
 
-    /**
-     * @description Embed building and sending
-     */
+      /**
+       * @description Embed building and sending
+       */
 
-    // Fields for embed
-    let botInfoFieldValue =
-      `<@${botID}> ~ ${botID}\n` +
-      `**Invite:** [Click](https://discord.com/api/oauth2/authorize?client_id=${botID}&permissions=0&scope=bot)\n` +
-      `**Prefix**: \`${interaction.options.getString('prefix')}\``;
+      // Fields for embed
+      let botInfoFieldValue =
+        `<@${botID}> ~ ${botID}\n` +
+        `**Invite:** [Click](https://discord.com/api/oauth2/authorize?client_id=${botID}&permissions=0&scope=bot)\n` +
+        `**Prefix**: \`${interaction.options.getString('prefix')}\``;
 
-    if (interaction.options.getString('library')) {
-      botInfoFieldValue += `\n**Library**: \`${interaction.options.getString('library')}\``;
-    }
+      if (interaction.options.getString('library')) {
+        botInfoFieldValue += `\n**Library**: \`${interaction.options.getString('library')}\``;
+      }
 
-    const embed = new EmbedBuilder()
-      .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16))
-      .setTitle('Awaiting approval')
-      .setDescription(`<:Check:1267447929015373914> **@${interaction.user.globalName}**, Your bot <@${botID}> is waiting approval from the staff team.`);
+      const embed = new EmbedBuilder()
+        .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16))
+        .setTitle('Awaiting approval')
+        .setDescription(`<:Check:1267447929015373914> **@${interaction.user.globalName}**, Your bot <@${botID}> is waiting approval from the staff team.`);
 
 
-    const publicEmbed = new EmbedBuilder()
-      .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16))
-      .setTitle(`New bot request!`)
-      .setDescription(`<@${interaction.user.id}>'s bot @${(await botInfo).username} is awaiting approval.`);
+      const publicEmbed = new EmbedBuilder()
+        .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16))
+        .setTitle(`New bot request!`)
+        .setDescription(`<@${interaction.user.id}>'s bot @${(await botInfo).username} is awaiting approval.`);
 
-    const staffEmbed = new EmbedBuilder()
-      .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16))
-      .setTitle(`New bot request!`)
-      .setThumbnail((await botInfo).avatarURL())
-      .addFields(
-        { name: `Bot Info:`, value: botInfoFieldValue },
-        { name: `Developer:`, value: `<@${interaction.user.id}>`}
-      );
+      const staffEmbed = new EmbedBuilder()
+        .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16))
+        .setTitle(`New bot request!`)
+        .setThumbnail((await botInfo).avatarURL())
+        .addFields(
+          { name: `Bot Info:`, value: botInfoFieldValue },
+          { name: `Developer:`, value: `<@${interaction.user.id}>`}
+        );
 
-    if (description) {
-      staffEmbed.setDescription(description);
-    }
+      if (description) {
+        staffEmbed.setDescription(description);
+      }
 
-    /**
-     * @description Button Row
-     */
-    const row = new ActionRowBuilder<ButtonBuilder>()
-      .addComponents(
-        new ButtonBuilder()
-          .setCustomId(`approve-${botID}-${interaction.user.id}`)
-          .setLabel('Approve')
-          .setStyle(ButtonStyle.Success),
-        new ButtonBuilder()
-          .setCustomId(`deny-${botID}-${interaction.user.id}`)
-          .setLabel('Decline')
-          .setStyle(ButtonStyle.Danger)
-      );
+      /**
+       * @description Button Row
+       */
+      const row = new ActionRowBuilder<ButtonBuilder>()
+        .addComponents(
+          new ButtonBuilder()
+            .setCustomId(`approve-${botID}-${interaction.user.id}`)
+            .setLabel('Approve')
+            .setStyle(ButtonStyle.Success),
+          new ButtonBuilder()
+            .setCustomId(`deny-${botID}-${interaction.user.id}`)
+            .setLabel('Decline')
+            .setStyle(ButtonStyle.Danger)
+        );
 
-    interaction.editReply({ embeds: [embed] });
-    publicChannel.send({ embeds: [publicEmbed] });
-    staffChannel.send({ embeds: [staffEmbed], components: [row] });
+      interaction.editReply({ embeds: [embed] });
+      publicChannel.send({ embeds: [publicEmbed] });
+      staffChannel.send({ embeds: [staffEmbed], components: [row] });
 
+      /**
+       * @description Update database
+       */
+      const botStats = {
+        invite: 0,
+        library: interaction.options.getString('library') || `Unknown`,
+        description: interaction.options.getString('description') || "N/A",
+        prefix: interaction.options.getString(`prefix`) || `/`,
+        awaited: true
+      };
+
+      upsertBotData(interaction.user.id, botID, botStats);
+      // TO GET THE BOTS OF A USER
+      // prisma.bot.findMany({ where: { userId: "123" } })
+    };
   }
 };
