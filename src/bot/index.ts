@@ -4,6 +4,7 @@ import { botConfig } from '../config/botConfig';
 import { loadEvents } from './handler/eventHandler';
 import { loadCommands } from './handler/commandHandler';
 import { logger } from '../utils';
+import { loadButtons } from './handler';
 
 const client = new ExtendedClient({
   intents: [
@@ -27,6 +28,7 @@ const client = new ExtendedClient({
 (async () => {
   await loadEvents(client);
   await loadCommands(client);
+  await loadButtons(client);
 })();
 
 client.login(botConfig.token).catch((error) => {
