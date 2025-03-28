@@ -189,6 +189,10 @@ const commands = [
         .setDescription('An image to display in the embed or message.')
         .setRequired(false)
       )
+    )
+    .addSubcommand(subCommand => subCommand
+      .setName('resources')
+      .setDescription('Shows server resources'),
     ),
   new SlashCommandBuilder().setName('bot-channel').setDescription('Manage your bots thread.')
     .addSubcommand(subCommand => subCommand
@@ -199,7 +203,7 @@ const commands = [
         .setDescription('The bot your making this thread for.')
         .setRequired(true)
       )
-    )
+    ),
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '9' }).setToken(token);

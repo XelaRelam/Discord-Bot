@@ -47,9 +47,17 @@ export const buttonHandler = async (client: ExtendedClient, interaction: Interac
     logger.error(`❌ | Error executing button handler: ${interaction.customId}`, error);
     console.error(error);
     if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content: 'There was an error handling this button.', ephemeral: true });
+      try {
+        await interaction.followUp({ content: 'There was an error handling this button.', flags: 'Ephemeral' });
+      } catch (err) {
+        logger.error(`❌ | error while trying to followUp on a button interaction: ${err}`);
+      }
     } else {
-      await interaction.reply({ content: 'There was an error handling this button.', ephemeral: true });
+      try{
+        await interaction.reply({ content: 'There was an error handling this button.', flags: 'Ephemeral'});
+      }catch (err) {
+        logger.error(`❌ | error while trying to reply to a button interaction: ${err}`);
+      }
     }
   }
 };
