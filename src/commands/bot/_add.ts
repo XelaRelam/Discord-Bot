@@ -8,9 +8,6 @@ import * as database from '../../database';
 const prisma = new PrismaClient();
 
 export default async function handleAddBot(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
-  if (interaction.user.id === '705306248538488947') {
-    return interaction.editReply({ content: 'This command is disabled at this moment.' });
-  }
 
   if (!(await userExists(client, interaction.options.getString('bot-id') || '0'))) {
     return interaction.editReply({ content: `I couldn't find a bot account.`});
