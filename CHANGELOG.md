@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.6.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.5.0...v1.6.0) (2025-03-28)
+
+
+### Features
+
+* Added a emoteFind function and collection to extended client. ([8aef58d](https://github.com/XelaRelam/Discord-Bot/commit/8aef58d168a4d13e6d99632b452ad8e4a98b2d70))
+* Added bot Info command. ([caf7b61](https://github.com/XelaRelam/Discord-Bot/commit/caf7b61f26c2f843bc4a5dda1c0881279835ce19))
+* Added button Handler. ([f189ea6](https://github.com/XelaRelam/Discord-Bot/commit/f189ea6df3acb572659c41a9694f6762f8fcdf43))
+* Added Decline button. ([e4bfa1f](https://github.com/XelaRelam/Discord-Bot/commit/e4bfa1f5a084166fed10770b1e6c2ba2eda116f2))
+* added hasRole function. ([88a9607](https://github.com/XelaRelam/Discord-Bot/commit/88a9607af09d9f266489ad43656b4bf7d902b467))
+* Added Staff Resources. (Slash and Buttons.) ([84a851c](https://github.com/XelaRelam/Discord-Bot/commit/84a851c2a88e1f8bbba6b69dcc66cf685136ea5f))
+* Button for Bot Approval now works. ([c64cbfa](https://github.com/XelaRelam/Discord-Bot/commit/c64cbfa35d26fe2c096ca2642af0209bbc666dbf))
+* Updated Database and added more Database Functions. ([7fa5e96](https://github.com/XelaRelam/Discord-Bot/commit/7fa5e961349e03fd85d422a02f67169912d7c5f5))
+
+
+### Bug Fixes
+
+* Added ApprovedBy to bot model. ([840f5dc](https://github.com/XelaRelam/Discord-Bot/commit/840f5dc407af147004af45d28d0b12219ce78f23))
+* Added description input for bot edit. ([874791c](https://github.com/XelaRelam/Discord-Bot/commit/874791cc60000f0f39242b99bb280d43dfabd4a7))
+
+
+### Chores
+
+* Updated gitIgnore. ([4bfbd2e](https://github.com/XelaRelam/Discord-Bot/commit/4bfbd2eaa603e7f181aa379343a17e92d05914c7))
+
+
+### Code Refactoring
+
+* Improved subcommand handler. ([e707fd0](https://github.com/XelaRelam/Discord-Bot/commit/e707fd0ab06fb680e827ce662bf4b8552cfd39d8))
+* Improved subcommand handler. ([7861793](https://github.com/XelaRelam/Discord-Bot/commit/7861793fd8a03f5cb3f8d9bd1d47012b13bba062))
+
 ## [1.5.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.4.0...v1.5.0) (2025-03-27)
 
 
