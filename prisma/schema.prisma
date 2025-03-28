@@ -18,6 +18,7 @@ model User {
 model Bot {
   botId       String   @unique /* Bot ID */
   userId      String /* Developer ID */
+  approvedBy  String /* Approved by ID */
   invite      Int      @default(0) /* Invite Permissions */
   createdAt   DateTime @default(now()) /* Date Added */
   addedAt     DateTime /* Date added to the server */
