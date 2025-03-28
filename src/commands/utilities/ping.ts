@@ -9,15 +9,15 @@ export default {
     .setDescription('Replies with Pong!'),
 
   async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
-    if (!client.ws) {
-      await interaction.reply('Bot is not fully connected to Discord.');
-      logger.debug('got /ping Bot is not fully connected to Discord.');
+    if (!client.isReady()) {
+      await interaction.reply('<:Fail:1355193840276869330> Bot is not ready.');
+      logger.debug('got /ping request but client is not ready.');
       return;
     }
 
-    if (!client.isReady()) {
-      await interaction.reply('Bot is not ready.');
-      logger.debug('got /ping request but client is not ready.');
+    if (!client.ws) {
+      await interaction.reply(`${client.findEmoji('BOT-fail')} Bot is not fully connected to Discord.`);
+      logger.debug('got /ping Bot is not fully connected to Discord.');
       return;
     }
 

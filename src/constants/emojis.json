@@ -1,0 +1,17 @@
+{
+  "BOT-fail": "<:Fail:1355193840276869330>",
+  "BOT-check": "<:Check:1355193759905874010>",
+  "BOT-javascriptInfo": "<:javascriptInfo:1355168998857117839>",
+  "BOT-learnjavascript": "<:learnjavascript:1355168772406640901>",
+  "BOT-discordjs": "<:discordjs:1355168325868585141>",
+  "BOT-developer": "<:developer:1355166127562559518>",
+  "BOT-Admin": "<:Admin:1355165913741004878>",
+  "BOT-badge": "<:badge:1355165602456539136>",
+  "BOT-slash": "<:slash_commands:1355164714572841090>",
+  "BOT-python": "<:Python:1355159215450095787>",
+  "BOT-botForge": "<:BotForge:1355159055097925672>",
+  "BOT-aoiJs": "<:AoiJs:1355158925141344659>",
+  "BOT-bdfd": "<:BDFD:1355158736574091486>",
+  "BOT-javascript": "<:Javascript:1355158184905408633>",
+  "BOT-server": "<:Server:1355158578289442907>"
+}

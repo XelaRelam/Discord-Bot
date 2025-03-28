@@ -7,8 +7,4 @@ export const botConfig = {
   guildId: env.guildId || '',
   prefix: '!',
   embedColor: 0x5865f2,
-  activity: {
-    name: 'with TypeScript',
-    type: ActivityType.Playing
-  },
 };

@@ -1,7 +1,5 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder, TextChannel } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, EmbedBuilder } from 'discord.js';
 import { ExtendedClient } from '../../types/extendedClient';
-import { hasRole } from '../../middleware/hasRole';
-import * as database from './../../database';
 import { logger } from '../../utils';
 
 export default {
@@ -126,7 +124,7 @@ export default {
       }
     } catch (err) {
       logger.error(`❌ | Error while trying to respond to "resources-*" button interaction. ${err}`);
-      interaction.editReply('There was an Internal error while trying to resolve your request, please inform staff.');
+      interaction.editReply(`${client.findEmoji('BOT-fail')} There was an Internal error while trying to resolve your request, please inform staff.`);
       if (err instanceof Error) {
         console.error('Error stack:', err.stack);
       }

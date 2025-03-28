@@ -18,7 +18,7 @@ export default {
     const allowedUserIds = ['705306248538488947', '1152694512829866065'];
 
     if (!allowedUserIds.includes(interaction.user.id)) {
-      return interaction.reply({ content: 'You do not have permission to use this command.', flags: 'Ephemeral'});
+      return interaction.reply({ content: `${client.findEmoji('BOT-fail')} You do not have permission to use this command.`, flags: 'Ephemeral'});
     }
 
     const code = interaction.options.getString('code', true);
