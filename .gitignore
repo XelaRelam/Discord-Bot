@@ -7,6 +7,7 @@ pnpm-lock.yaml
 
 # Database
 **/*.db
+**/*.db-journal
 
 # Logs
 logs
