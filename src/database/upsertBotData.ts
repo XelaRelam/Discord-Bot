@@ -10,6 +10,7 @@ export const upsertBotData = async (userId: string, botId: string, botData: {
   library?: string;
   description?: string;
   prefix?: string;
+  approvedBy?: string;
   addedAt?: Date;
 }) => {
   try {
@@ -29,6 +30,7 @@ export const upsertBotData = async (userId: string, botId: string, botData: {
     if (botData.awaited !== undefined) updateData.botAwaiting = botData.awaited;
     if (botData.added !== undefined) updateData.botAdded = botData.added;
     if (botData.addedAt !== undefined) updateData.addedAt = botData.addedAt;
+    if (botData.approvedBy !== undefined) updateData.approvedBy = botData.approvedBy;
 
     // Upsert bot data
     await prisma.bot.upsert({
@@ -44,6 +46,7 @@ export const upsertBotData = async (userId: string, botId: string, botData: {
         botAwaiting: botData.awaited ?? false,
         botAdded: botData.added ?? false,
         addedAt: botData.addedAt ?? new Date(),
+        approvedBy: botData.approvedBy ?? 'Unknown',
       },
     });
 
