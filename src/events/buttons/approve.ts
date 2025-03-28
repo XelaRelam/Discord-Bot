@@ -79,14 +79,15 @@ export default {
        */
       const botStats = {
         awaited: false,
-        added: true
+        added: true,
+        approvedBy: `${interaction.user.id}`
       };
-      database.upsertBotData(interaction.user.id, botId, botStats);
+      database.upsertBotData(user.id, botId, botStats);
 
       const userData = {
         hasAwaitedBot: false,
       };
-      database.upsertUserData(interaction.user.id, userData);
+      database.upsertUserData(user.id, userData);
 
 
       try{
