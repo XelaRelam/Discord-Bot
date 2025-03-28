@@ -3,6 +3,7 @@ import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
 import handleAddBot from './_add';
 import handleInfoBot from './_info';
+import handleEditBot from './_edit';
 
 export default {
   data: new SlashCommandBuilder()
@@ -54,7 +55,12 @@ export default {
       .addUserOption(option => option
         .setName('bot')
         .setDescription('What bot do you want to see the info on?')
-        .setRequired(true)
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('bot-id')
+        .setDescription('bot ID if you prefer to use botID?')
+        .setRequired(false)
       )
     )
     .addSubcommand(subcommand => subcommand
@@ -69,6 +75,11 @@ export default {
         .setName('invite')
         .setDescription('Change the invite code for your bot. (Admin is not allowed)')
         .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('description')
+        .setDescription('Change the description of your bot.')
+        .setRequired(false),
       )
       .addStringOption(option => option
         .setName('prefix')
@@ -101,13 +112,19 @@ export default {
   async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
     await interaction.deferReply({flags: "Ephemeral"});
     try {
+      if (!(interaction.user.id === '1152694512829866065')) {
+        return interaction.editReply({ content: `${client.findEmoji('BOT-fail')} This command is disabled at this moment.` });
+      }
+
       if (interaction.options.getSubcommand() === 'add') {
         await handleAddBot(client, interaction);
-      } else if (interaction.options.getSubcommand() === 'embed') {
+      } else if (interaction.options.getSubcommand() === 'info') {
         await handleInfoBot(client, interaction);
+      } else if (interaction.options.getSubcommand() === 'edit') {
+        await handleEditBot(client, interaction);
       }
     } catch (err) {
-      logger.error(`❌ | Error while trying to respond to "staff embed" interaction. ${err}`);
+      logger.error(`❌ | Error while trying to respond to "${interaction.commandName}.${interaction.options.getSubcommand()}" interaction. ${err}`);
       interaction.editReply(`${client.findEmoji('BOT-fail')} There was an Internal error while trying to resolve your request, please inform staff.`);
       if (err instanceof Error) {
         console.error('Error stack:', err.stack);
