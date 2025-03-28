@@ -83,6 +83,11 @@ const commands = [
         .setRequired(false)
       )
       .addStringOption(option => option
+        .setName('description')
+        .setDescription('Change the description of your bot.')
+        .setRequired(false),
+      )
+      .addStringOption(option => option
         .setName('prefix')
         .setDescription('Change the prefix of your discord bot.')
         .setRequired(false)
