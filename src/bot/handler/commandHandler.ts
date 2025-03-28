@@ -21,15 +21,17 @@ const loadSubcommands = (client: ExtendedClient, command: any) => {
   if (!command.data.options) return;
 
   for (const option of command.data.options) {
-    if (option.type === 1 || option.type === 2) { // 1 = Subcommand, 2 = Subcommand Group
+    if (option.toJSON().type === 1 || option.toJSON().type === 2) { // 1 = Subcommand, 2 = Subcommand Group
       client.subcommands.set(`${command.data.name}/${option.name}`, command);
-      logger.info(`✅ | Loaded subcommand: ${command.data.name}/${option.name}`);
+      logger.info(`✅ |   └─ subcommand: "${command.data.name} ~ ${option.name}"`);
     }
   }
 };
 
 const loadCommandFiles = async (client: ExtendedClient, folderPath: string) => {
-  const commandFiles = fs.readdirSync(folderPath).filter((file) => file.endsWith('.js'));
+  const commandFiles = fs.readdirSync(folderPath).filter((file) =>
+    file.endsWith('.js') && !file.startsWith('_')
+  );
 
   for (const file of commandFiles) {
     const commandPath = path.join(folderPath, file);

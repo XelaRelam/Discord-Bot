@@ -58,10 +58,15 @@ const commands = [
     .addSubcommand(subcommand => subcommand
       .setName('info')
       .setDescription('Check the info on a bot.')
-      .addIntegerOption(option => option
+      .addUserOption(option => option
         .setName('bot')
         .setDescription('What bot do you want to see the info on?')
-        .setRequired(true)
+        .setRequired(false)
+      )
+      .addStringOption(option => option
+        .setName('bot-id')
+        .setDescription('bot ID if you prefer to use botID?')
+        .setRequired(false)
       )
     )
     .addSubcommand(subcommand => subcommand
