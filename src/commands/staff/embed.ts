@@ -26,6 +26,10 @@ export default {
       .addStringOption(option => option.setName('field-three-description').setDescription('The description of field three.').setRequired(false))
       .addBooleanOption(option => option.setName('thumbnail').setDescription('If true will show the server icon as thumbnail.').setRequired(false))
       .addStringOption(option => option.setName('image').setDescription('An image to display in the embed or message.').setRequired(false))
+    )
+    .addSubcommand(subCommand => subCommand
+      .setName('embed')
+      .setDescription('Generate a message or embed (staff)')
     ),
 
   async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {

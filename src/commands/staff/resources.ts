@@ -109,6 +109,5 @@ export default {
 
     await channel.send({ embeds: [embed], components: [firstRow, secondaryRow, thirdRow] });
     await interaction.editReply({content: `Embed has been send to <#${channel.id}>`});
-
   }
 };
