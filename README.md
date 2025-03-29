@@ -56,6 +56,8 @@ If you're setting up a copy of this bot on your server, follow the steps below:
 4. Run the bot:
 
    ```bash
+   npm run db
+   npm run build
    npm run start
    ```
 
