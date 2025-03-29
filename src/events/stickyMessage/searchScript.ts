@@ -1,8 +1,6 @@
 import { ExtendedClient } from '../../types/extendedClient';
 import { Message, TextChannel } from 'discord.js';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient(); // Instantiate Prisma Client
+import { prisma } from '../../database';
 
 const STICKY_CHANNELS = new Set(['1266455854811578379']);
 

@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../database';
 import { ExtendedClient } from '../../types/extendedClient';
 import { MessageReaction, PartialMessageReaction, PartialUser, TextChannel, User } from 'discord.js';
 import { logger } from '../../utils';
 
-const prisma = new PrismaClient();
 const STAR_THRESHOLD = 3;
 const STARBOARD_CHANNEL_ID = '1252185956291842181';
 

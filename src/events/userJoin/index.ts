@@ -1,4 +1,4 @@
-import { ExtendedClient } from '@/types/extendedClient';
+import { ExtendedClient } from '../../types/extendedClient';
 import { EmbedBuilder, GuildMember, TextChannel } from 'discord.js';
 import { readFileSync } from 'fs';
 import { join } from 'path';

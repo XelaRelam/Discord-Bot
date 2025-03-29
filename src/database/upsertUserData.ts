@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from ".";
 
 export const upsertUserData = async (userId: string, userData: {
   userBanned?: boolean;

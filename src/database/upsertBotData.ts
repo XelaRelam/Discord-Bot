@@ -1,7 +1,5 @@
 import { logger } from '..//utils';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '.';
 
 export const upsertBotData = async (userId: string, botId: string, botData: {
   awaited: boolean;

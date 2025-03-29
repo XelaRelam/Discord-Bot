@@ -2,10 +2,8 @@ import { ExtendedClient } from "../../types/extendedClient";
 import { botHasEmbedPerms, botHasSendPerms, botHasViewPerms } from "../../middleware/permissions";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, EmbedBuilder, TextChannel } from "discord.js";
 import { userExists } from "../../middleware/userExists";
-import { PrismaClient } from "@prisma/client";
 import * as database from '../../database';
 
-const prisma = new PrismaClient();
 
 export default async function handleAddBot(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
 
@@ -22,11 +20,11 @@ export default async function handleAddBot(client: ExtendedClient, interaction: 
     return interaction.editReply({ content: `Could not find this bot.`});
   }
 
-  let dbBot = await prisma.bot.findUnique({
+  let dbBot = await database.prisma.bot.findUnique({
     where: { botId: botID },
   });
 
-  let dbUser = await prisma.user.findUnique({
+  let dbUser = await database.prisma.user.findUnique({
     where: { user_id: interaction.user.id },
   });
 

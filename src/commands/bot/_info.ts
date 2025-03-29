@@ -1,4 +1,4 @@
-import { ExtendedClient } from "@/types/extendedClient";
+import { ExtendedClient } from "../../types/extendedClient";
 import { ChatInputCommandInteraction, User } from "discord.js";
 import * as database from '../../database';
 import { userExists } from "../../middleware/userExists";
