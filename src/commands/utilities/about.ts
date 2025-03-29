@@ -14,7 +14,7 @@ export default {
       .addFields(
         {
           name: '❯ Build',
-          value: `V1.7.0`,
+          value: `V1.8.0`,
           inline: true
         },
         {
