@@ -17,7 +17,7 @@ export default {
   async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
     await interaction.deferReply({flags: "Ephemeral"});
     try {
-      if (!(interaction.user.id === '705306248538488947') && true) {
+      if (!(interaction.user.id === '705306248538488947') && false) {
         return interaction.editReply({ content: `${client.findEmoji('BOT-fail')} This command is disabled at this moment.` });
       }
 
