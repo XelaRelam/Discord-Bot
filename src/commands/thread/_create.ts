@@ -2,6 +2,7 @@ import { ExtendedClient } from "../../types/extendedClient";
 import { ChatInputCommandInteraction, TextChannel, ThreadAutoArchiveDuration } from "discord.js";
 import { prisma } from '../../database';
 import { hasPerms } from "../../middleware/hasChannelPerms";
+import { EmbedBuilder } from "@discordjs/builders";
 
 export default async function handleThreadCreate(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
   const botUser = interaction.options.getUser('bot', true);
@@ -56,6 +57,16 @@ export default async function handleThreadCreate(client: ExtendedClient, interac
 
     await thread.members.add(interaction.user.id);
     await thread.members.add(botUser.id);
+
+    const embed = new EmbedBuilder()
+      .setTitle('New Channel Created!')
+      .setDescription(`<@${interaction.user.id}> Has made a thread for <${botUser.id}>.`)
+      .setFooter({text: 'Threads are deleted after 24h of inactivity.'})
+      .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16));
+
+    parentChannel.send({embeds: [embed]});
+
+    interaction.editReply({content: `Your thread for <@${botUser.id}> has been created. (<#${thread.id}>)`});
 
     await prisma.thread.create({
       data: {
