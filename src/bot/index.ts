@@ -1,10 +1,8 @@
 import { ExtendedClient } from '../types/extendedClient';
 import { GatewayIntentBits, Partials } from 'discord.js';
 import { botConfig } from '../config/botConfig';
-import { loadEvents } from './handler/eventHandler';
-import { loadCommands } from './handler/commandHandler';
 import { logger } from '../utils';
-import { loadButtons } from './handler';
+import { loadButtons, loadLoops, loadCommands, loadEvents } from './handler';
 
 const client = new ExtendedClient({
   intents: [
@@ -29,6 +27,7 @@ const client = new ExtendedClient({
   await loadEvents(client);
   await loadCommands(client);
   await loadButtons(client);
+  await loadLoops(client);
 })();
 
 client.login(botConfig.token).catch((error) => {
