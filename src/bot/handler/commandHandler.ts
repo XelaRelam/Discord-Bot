@@ -2,6 +2,7 @@ import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
 import fs from 'fs';
 import path from 'path';
+import { registerCommands } from './registerCommands';
 
 const loadCommand = async (client: ExtendedClient, commandPath: string) => {
   const command = (await import(commandPath)).default;
@@ -56,4 +57,7 @@ const loadCommandFolders = async (client: ExtendedClient, commandsPath: string) 
 export const loadCommands = async (client: ExtendedClient) => {
   const commandsPath = path.join(__dirname, '../../commands');
   await loadCommandFolders(client, commandsPath);
+
+  // ✅ Register slash commands with Discord after loading
+  await registerCommands(client);
 };
