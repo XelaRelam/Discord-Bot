@@ -35,11 +35,13 @@ model Bot {
 }
 
 model Thread {
-  threadId   String   @id /* Id of the thread                   */
-  userId     String   @unique /* User who own the thread            */
-  botId      String   @unique /* The bot of which the thread is for */
-  createdAt  DateTime @default(now()) /* Date Created                       */
-  lastActive DateTime @default(now()) /* Last activity                      */
+  threadId   String   @id /* Discord thread ID */
+  userId     String /* User who owns the thread */
+  botId      String /* The bot associated with the thread */
+  createdAt  DateTime @default(now()) /* Thread creation date */
+  lastActive DateTime @default(now()) /* Last activity timestamp */
+
+  @@index([lastActive])
 }
 
 model Starboard {
