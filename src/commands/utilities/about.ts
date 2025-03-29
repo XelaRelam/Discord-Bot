@@ -4,8 +4,8 @@ import { EmbedBuilder } from '@discordjs/builders';
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription('Replies with Pong!'),
+    .setName('about')
+    .setDescription('Get info on this bot!'),
 
   async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
     const Embed = new EmbedBuilder()
