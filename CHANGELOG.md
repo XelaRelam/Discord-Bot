@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.7.1](https://github.com/XelaRelam/Discord-Bot/compare/v1.7.0...v1.7.1) (2025-03-29)
+
+
+### Features
+
+* Added self-promo. ([b31f99f](https://github.com/XelaRelam/Discord-Bot/commit/b31f99f6f9b245f27489aaec59a0f0aa276a5f3e))
+
+
+### Bug Fixes
+
+* Changed gif buffer to stream . ([992d906](https://github.com/XelaRelam/Discord-Bot/commit/992d906ac38f93594b2581f2f008ae3a1ceb65e2))
+* compressed and made gif smaller. ([98b63ca](https://github.com/XelaRelam/Discord-Bot/commit/98b63cabb6da0bda667d796ba310c8262913c414))
+* Making ready for public use. ([0cb58f4](https://github.com/XelaRelam/Discord-Bot/commit/0cb58f44b703434256ba09c96cb2ce452d38d57d))
+
 ## [1.7.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.6.0...v1.7.0) (2025-03-29)
 
 
