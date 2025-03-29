@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.7.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.6.0...v1.7.0) (2025-03-29)
+
+
+### Features
+
+* Added a function to see if a user has certain perms in a channel. ([037ff66](https://github.com/XelaRelam/Discord-Bot/commit/037ff66f1ec0f6012786c71600230f4b0ef7b12a))
+* Added Loop Handler. ([9163cd5](https://github.com/XelaRelam/Discord-Bot/commit/9163cd50f34b2269142e5abd1b1617063ff58589))
+* Added Thread Create command and handler. ([16090d6](https://github.com/XelaRelam/Discord-Bot/commit/16090d6081d6a1319428c2f525696ff4976a05dd))
+
+
+### Bug Fixes
+
+* Added index for threads. ([b074686](https://github.com/XelaRelam/Discord-Bot/commit/b0746865d98e9e3c52d4255d95ee97021e207c95))
+* Now we use a global prisma client. ([0a336dc](https://github.com/XelaRelam/Discord-Bot/commit/0a336dc0d40ffb4a62cdd3ba0a72e414ebb9975a))
+* Removed Deploy:Commands script and now deploys commands on start. ([d6032c1](https://github.com/XelaRelam/Discord-Bot/commit/d6032c1028e7bcc6b1b8c8d3ad98ab3491c5c293))
+
 ## [1.6.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.5.0...v1.6.0) (2025-03-28)
 
 
