@@ -28,6 +28,5 @@ export default (client: ExtendedClient) => {
     }
   };
 
-
   setInterval(() => checkInactiveThreads(), 30 * 60 * 1000);
 };
