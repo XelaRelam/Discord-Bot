@@ -10,7 +10,6 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "deploy:commands": "ts-node scripts/deployCommands.ts",
     "lint": "eslint '**/*.{js,ts,tsx}' --cache && git add . && git commit -m 'style: lint'",
     "release": "npx commit-and-tag-version",
     "build": "tsc",
