@@ -23,7 +23,7 @@ export default (client: ExtendedClient) => {
         await prisma.thread.delete({
           where: { threadId: thread.threadId },
         });
-        logger.info(`❌ Deleted inactive thread: ${thread.threadId}`);
+        logger.debug(`❌ Deleted inactive thread: ${thread.threadId}`);
       }
     }
   };
