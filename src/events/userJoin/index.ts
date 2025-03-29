@@ -1,6 +1,7 @@
+import { logger } from '../../utils';
 import { ExtendedClient } from '../../types/extendedClient';
 import { EmbedBuilder, GuildMember, TextChannel } from 'discord.js';
-import { readFileSync } from 'fs';
+import { createReadStream, readFileSync } from 'fs';
 import { join } from 'path';
 
 export const handleUserJoin = async (client: ExtendedClient, member: GuildMember) => {
@@ -9,9 +10,14 @@ export const handleUserJoin = async (client: ExtendedClient, member: GuildMember
   const welcomeChannel = member.guild.channels.cache.get('1277761468875411520') as TextChannel;
   if (!welcomeChannel) return;
 
+  if (!welcomeChannel.permissionsFor(client.user!)?.has(['SendMessages', 'AttachFiles'])) {
+    logger.error("❌ Bot lacks permissions in welcome channel.");
+    return;
+  }
+
   const gifPath = join(__dirname, '..', '..', '..','content', 'Welcome.gif');
-  console.debug(gifPath);
-  const gifBuffer = readFileSync(gifPath);
+  logger.debug(gifPath);
+  const gifStream = createReadStream(gifPath);
 
   try {
     const embed = new EmbedBuilder()
@@ -32,7 +38,7 @@ export const handleUserJoin = async (client: ExtendedClient, member: GuildMember
       content: `<@${member.id}>`,
       embeds: [embed],
       files: [{
-        attachment: gifBuffer,
+        attachment: gifStream,
         name: 'XelaRelam_Welcome.gif'
       }]
     });
