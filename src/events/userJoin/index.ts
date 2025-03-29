@@ -30,7 +30,7 @@ export const handleUserJoin = async (client: ExtendedClient, member: GuildMember
       `> Hangout in <#1235206770532810802>.\n\n` +
       `> Get Support in <#1235243173635428493>.\n\n` +
       `> Check announcements in <#1235206354776489984>.\n\n` +
-      `> Get Scripts from <#1235267631188283423>\n\n` +
+      `> Get Scripts from <#1284491556392407101>\n\n` +
       `Visit <id:customize> to customize your experience and unlock roles and channels as well (<#1235237608217645290>).\n\n` +
       `You are our **${member.guild.memberCount}th** member and hopefully, you'll enjoy your stay in the server!`
     )
