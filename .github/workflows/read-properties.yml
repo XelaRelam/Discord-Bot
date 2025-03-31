@@ -1,3 +1,4 @@
+---
 name: Update GitHub Custom Properties
 on: push
 jobs:
