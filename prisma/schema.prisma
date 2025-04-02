@@ -29,7 +29,8 @@ model Bot {
   botAdded    Boolean  @default(false) /* If Bot is approved */
   botAwaiting Boolean  @default(false) /* If Bot is awaiting approval */
 
-  user User @relation(fields: [userId], references: [user_id], onUpdate: Cascade, onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [user_id], onUpdate: Cascade, onDelete: Cascade)
+  threads Thread[] @relation("ThreadBots")
 
   @@id([botId])
 }
@@ -37,9 +38,9 @@ model Bot {
 model Thread {
   threadId   String   @id /* Discord thread ID */
   userId     String /* User who owns the thread */
-  botId      String /* The bot associated with the thread */
   createdAt  DateTime @default(now()) /* Thread creation date */
   lastActive DateTime @default(now()) /* Last activity timestamp */
+  bots       Bot[]    @relation("ThreadBots") // Many-to-many relation with Bot
 
   @@index([lastActive])
 }

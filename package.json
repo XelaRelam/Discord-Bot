@@ -16,7 +16,8 @@
     "start": "node dist/bot/index.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node -r src/bot/index.ts",
     "test": "npm run build && node dist/tests/hello",
-    "db": "npx prisma format && npx prisma generate && npx prisma db push"
+    "db": "npx prisma format && npx prisma generate && npx prisma db push",
+    "commands:remove": "node scripts/unregister.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

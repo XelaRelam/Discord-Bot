@@ -5,7 +5,6 @@ import { logger } from "../../utils";
 
 export default async function handleThreadUpdate(client: ExtendedClient, message: Message) {
   if (!message.channel.isThread()) return;
-
   const thread = message.channel as ThreadChannel;
 
   try {
