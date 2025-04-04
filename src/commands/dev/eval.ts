@@ -30,7 +30,7 @@ export default {
     const code = interaction.options.getString('code', true);
 
     try {
-      const result = await eval(code);
+      const result = await (async () => eval(code))();
 
       const resultOutput = result instanceof Promise ? await result : result;
 
