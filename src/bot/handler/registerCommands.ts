@@ -19,7 +19,7 @@ export const registerCommands = async (
       .map(cmd => cmd.data instanceof SlashCommandBuilder
         ? cmd.data.toJSON()
         : null,
-      )      .filter(Boolean); // Remove any null values
+      ).filter(Boolean); // Remove any null values
 
     await rest.put(Routes.applicationGuildCommands(`${client.env('DISCORD_CLIENT_ID')}`, `${client.env('DISCORD_GUILD_ID')}`), { body: commands });
 
