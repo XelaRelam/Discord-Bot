@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.8.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.7.1...v1.8.0) (2025-04-04)
+
+
+### Features
+
+* Debug database feature. ([36329d6](https://github.com/XelaRelam/Discord-Bot/commit/36329d6ef07444f7ef0dd6c8b5a5efeefc1c1804))
+* Now uses modal for decline. ([3e9f8ae](https://github.com/XelaRelam/Discord-Bot/commit/3e9f8aec542c2547c6c58c8841df1a039432f9dc))
+* Removes bots when user leaves. ([34ab4d9](https://github.com/XelaRelam/Discord-Bot/commit/34ab4d94ec7487b8a9c36849b45f6c7997edac49))
+
+
+### Bug Fixes
+
+* exec now is async. ([179b8ae](https://github.com/XelaRelam/Discord-Bot/commit/179b8ae91da516226c17f539de131e51d27a4c0f))
+* typos. ([747c463](https://github.com/XelaRelam/Discord-Bot/commit/747c46363cf7c865e5408c477092fe3f8c3dfeb1))
+
+
+### Code Refactoring
+
+* Eslint/QLTY. ([0e3b49a](https://github.com/XelaRelam/Discord-Bot/commit/0e3b49a8ca2dc9015018c742aa913cbcf39ed38c))
+
 ## [1.7.1](https://github.com/XelaRelam/Discord-Bot/compare/v1.7.0...v1.7.1) (2025-03-29)
 
 ### Features
