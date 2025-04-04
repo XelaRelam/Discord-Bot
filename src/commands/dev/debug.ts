@@ -93,6 +93,26 @@ export default {
     await interaction.deferReply({flags: 'Ephemeral'});
     let result: InteractionReturn = { success: false };
 
+  /**
+   * @description Check if user is guildMember
+   */
+    const ROLE_ID = '1354193758010212423';
+    const guildMember = await interaction.guild?.members.fetch(interaction.user.id);
+    if (!guildMember) {
+      await interaction.editReply({ content: '❌ Could not fetch your member data.' });
+      return {success:false};
+    }
+
+    if (!guildMember.roles.cache.has(ROLE_ID)) {
+      await interaction.editReply({
+        content: `🚫 You need the <@&${ROLE_ID}> role to use this command.`,
+      });
+      return {success:false};
+    }
+
+  /**
+   * @description Check the params
+   */
     try {
       if (interaction.options.getSubcommandGroup() === 'database') {
         switch (interaction.options.getSubcommand()) {
