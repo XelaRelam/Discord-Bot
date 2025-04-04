@@ -114,7 +114,7 @@ export default async function handleAddBot(
   const publicEmbed = new EmbedBuilder()
     .setTitle('New bot request!')
     .setDescription(
-      `<@${interaction.user.id}>'s bot` +
+      `<@${interaction.user.id}>'s bot ` +
       `@${(await botInfo).username} is awaiting approval.`,
     )
     .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16));

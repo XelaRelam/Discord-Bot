@@ -1,5 +1,6 @@
 import { ButtonInteraction, EmbedBuilder, TextChannel } from 'discord.js';
 import { ExtendedClient } from '../../types/extendedClient';
+import { Bot } from '../../types/database';
 import { hasRole } from '../../middleware/hasRole';
 import * as database from './../../database';
 import { logger } from '../../utils';
@@ -29,7 +30,7 @@ export default {
         await interaction.reply({ content: `${client.findEmoji('BOT-fail')} You do not have the right role for this.`, flags: 'Ephemeral'});
         return;
       }
-
+      const bot = botData.data as Bot;
       /**
        * @description Embeds
        */
@@ -37,11 +38,11 @@ export default {
         `<@${botId}> ~ ${botId}\n` +
         '**Invite:** [Click](https://discord.com/api/oauth2/authorize'+
         `?client_id=${botId}&permissions=0&scope=bot)\n` +
-        `**Prefix**: \`${botData.data?.prefix}\`\n` +
-        `**Developer**: <@${botData.data?.userId}> ~ ${botData.data?.userId}`;
+        `**Prefix**: \`${bot.prefix}\`\n` +
+        `**Developer**: <@${bot.userId}> ~ ${bot.userId}`;
 
-      if (botData.data?.library) {
-        botInfoFieldValue += `\n**Library**: \`${botData.data?.library}\``;
+      if (bot.library) {
+        botInfoFieldValue += `\n**Library**: \`${bot.library}\``;
       }
 
       const dmEmbed = new EmbedBuilder()

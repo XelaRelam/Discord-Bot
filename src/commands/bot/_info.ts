@@ -37,7 +37,7 @@ export default async function handleInfoBot(
   }
 
   const botData = await database.getBot(bot.id);
-  if (!botData.success || !botData.data?.botAdded) {
+  if (!botData.success || !('botAdded' in botData.data!)) {
     const message = await interaction.editReply({content: `${client.findEmoji('BOT-fail')} This bot was not found in our system.`});
     return {success:false, message};
   }

@@ -2,6 +2,7 @@ import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
 import { InteractionReturn } from '@/types/interactionReturn';
+import * as database from '@/database';
 
 export default {
   data: new SlashCommandBuilder()

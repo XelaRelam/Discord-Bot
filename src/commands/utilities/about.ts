@@ -43,7 +43,7 @@ export default {
           .setLabel('Contact Developer')
           .setStyle(ButtonStyle.Link),
       );
-    const message = await interaction.editReply({
+    const message = await interaction.reply({
       embeds: [Embed],
       components: [row],
     });
