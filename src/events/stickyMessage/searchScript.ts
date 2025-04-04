@@ -6,9 +6,11 @@ const STICKY_CHANNELS = new Set(['1266455854811578379']);
 
 export const searchScript = async (
   client: ExtendedClient,
-  message: Message
-) => {
-  if (message.author.bot && message.author.id !== client.user?.id) { // handle sticky If message is sent (not the bot itself)
+  message: Message,
+):Promise<void> => {
+  if (
+    message.author.bot && message.author.id !== client.user?.id
+  ) { // handle sticky If message is sent (not the bot itself)
     if (!STICKY_CHANNELS.has(message.channel.id)) return;
     const channel = message.channel as TextChannel;
     try {
@@ -21,7 +23,8 @@ export const searchScript = async (
        */
       if (lastSticky) {
         try {
-          const lastMessage = await channel.messages.fetch(lastSticky.messageID);
+          const lastMessage =
+            await channel.messages.fetch(lastSticky.messageID);
           if (lastMessage && lastMessage.author.id === client.user?.id) {
             await lastMessage.delete();
           }
@@ -34,11 +37,11 @@ export const searchScript = async (
        * @description Send new message
        */
       const botMessage = await channel.send({
-        content: `**__Sticky Message__**\n\n` +
-          `> Searching for scripts go to <#1266455854811578379>.\n\n` +
-          `> Daily scripts from video, go to <#1301937886546890823>.\n\n` +
-          `> Giving suggestions for new content and new scripts, should go there <#1235268079236284416>.\n\n` +
-          `**Found any issues?**\nPing **meowscript** for issues and make sure to discuss in <#1235268079236284416>.`
+        content: '**__Sticky Message__**\n\n' +
+          '> Searching for scripts go to <#1266455854811578379>.\n\n' +
+          '> Daily scripts from video, go to <#1301937886546890823>.\n\n' +
+          '> Giving suggestions for new content and new scripts, should go there <#1235268079236284416>.\n\n' +
+          '**Found any issues?**\nPing **meowscript** for issues and make sure to discuss in <#1235268079236284416>.',
       });
 
       /**
@@ -57,8 +60,10 @@ export const searchScript = async (
           },
         });
       }
+      return;
     } catch (err) {
       console.error(`❌ | Failed to handle sticky message: ${err}`);
+      return;
     }
   }
 };

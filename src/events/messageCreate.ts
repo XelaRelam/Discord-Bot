@@ -6,7 +6,10 @@ import handleThreadUpdate from './thread';
 
 export default {
   name: Events.MessageCreate,
-  async execute(client: ExtendedClient, message: Message) {
+  async execute(
+    client: ExtendedClient,
+    message: Message,
+  ):Promise<void> {
     try {
       if (message.channelId === '1266455854811578379') {
         await searchScript(client, message);
@@ -17,5 +20,6 @@ export default {
     } catch (error) {
       logger.error('Error handling sticky message:', error);
     }
+    return;
   },
 };

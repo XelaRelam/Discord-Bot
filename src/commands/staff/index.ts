@@ -3,6 +3,7 @@ import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
 import handleResources from './_resources';
 import handleEmbed from './_embed';
+import { InteractionReturn } from '@/types/interactionReturn';
 
 export default {
   data: new SlashCommandBuilder()
@@ -26,27 +27,40 @@ export default {
       .addStringOption(option => option.setName('field-three-name').setDescription('The name of field three.').setRequired(false))
       .addStringOption(option => option.setName('field-three-description').setDescription('The description of field three.').setRequired(false))
       .addBooleanOption(option => option.setName('thumbnail').setDescription('If true will show the server icon as thumbnail.').setRequired(false))
-      .addStringOption(option => option.setName('image').setDescription('An image to display in the embed or message.').setRequired(false))
+      .addStringOption(option => option.setName('image').setDescription('An image to display in the embed or message.').setRequired(false)),
     )
     .addSubcommand(subCommand => subCommand
       .setName('resources')
-      .setDescription('Generate a message or embed (staff)')
+      .setDescription('Generate a message or embed (staff)'),
     ),
-  async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
-    await interaction.deferReply({flags: "Ephemeral"});
+  async execute(
+    client: ExtendedClient,
+    interaction: ChatInputCommandInteraction,
+  ):Promise<InteractionReturn> {
+    await interaction.deferReply({flags: 'Ephemeral'});
+    let result: InteractionReturn = { success: false };
+
     try {
       if (interaction.options.getSubcommand() === 'resources') {
-        await handleResources(client, interaction);
+        result = await handleResources(client, interaction);
       } else if (interaction.options.getSubcommand() === 'embed') {
-        await handleEmbed(client, interaction);
+        result = await handleEmbed(client, interaction);
+      }
+      if (result.success) {
+        return { success: true, message: result.message };  // This is fine now
+      } else {
+        return { success: false };
       }
     } catch (err) {
-      logger.error(`❌ | Error while trying to respond to "staff embed" interaction. ${err}`);
+      logger.error(
+        '❌ | Error while trying to respond to "staff embed" interaction. '+
+        err,
+      );
       interaction.editReply(`${client.findEmoji('BOT-fail')} There was an Internal error while trying to resolve your request, please inform staff.`);
       if (err instanceof Error) {
         console.error('Error stack:', err.stack);
       }
-      return;
+      return { success: false };
     }
-  }
+  },
 };

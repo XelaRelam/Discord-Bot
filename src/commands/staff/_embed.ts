@@ -1,24 +1,39 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, ColorResolvable, AttachmentBuilder, GuildMember, TextChannel } from 'discord.js';
-import { ExtendedClient } from '../../types/extendedClient';
-import { logger } from '../../utils';
-import { colorRegex, isValidImageURL } from '../../types/regex';
-import { botHasEmbedPerms, botHasSendPerms, botHasViewPerms } from '../../middleware/permissions';
+import { ChatInputCommandInteraction, EmbedBuilder, ColorResolvable, AttachmentBuilder, GuildMember, TextChannel } from 'discord.js';
+import { ExtendedClient } from '@/types/extendedClient';
+import { colorRegex, isValidImageURL } from '@/types/regex';
+import { botHasEmbedPerms, botHasSendPerms, botHasViewPerms } from '@/middleware/permissions';
+import { InteractionReturn } from '@/types/interactionReturn';
 
-export default async function handleEmbed(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
+export default async function handleEmbed(
+  client: ExtendedClient,
+  interaction: ChatInputCommandInteraction,
+):Promise<InteractionReturn> {
   const ROLE_ID = '1354193758010212423';
-  const channel = client.channels.cache.get(interaction.channelId) as TextChannel;
+  const channel =
+    client.channels.cache.get(interaction.channelId) as TextChannel;
   if (!interaction.member || !(interaction.member instanceof GuildMember)) {
-    return await interaction.editReply({ content: `${client.findEmoji('BOT-fail')} Could not verify your roles.`});
+    const message = await interaction.editReply({ content: `${client.findEmoji('BOT-fail')} Could not verify your roles.`});
+    return {success:false, message};
   }
 
-  if (!botHasSendPerms(client, channel) || !botHasEmbedPerms(client, channel) || !botHasViewPerms(client, channel)) {
-    return await interaction.editReply({content: `${client.findEmoji('BOT-fail')} I do not have the right permissions for this channel, please inform staff.`});
+  if (
+    !botHasSendPerms(client, channel)
+    || !botHasEmbedPerms(client, channel)
+    || !botHasViewPerms(client, channel)
+  ) {
+    const message = await interaction.editReply({content: `${client.findEmoji('BOT-fail')} I do not have the right permissions for this channel, please inform staff.`});
+    return {success:false, message};
   }
 
   const hasRole = interaction.member.roles.cache.has(ROLE_ID);
 
   if (!hasRole) {
-    return await interaction.editReply({ content: `${client.findEmoji('BOT-fail')} You do not have permission to use this command.` });
+    const message = await interaction.editReply(
+      {
+        content: `${client.findEmoji('BOT-fail')} You do not have permission to use this command.`,
+      },
+    );
+    return {success:false, message};
   }
 
   const message = interaction.options.getString('message');
@@ -47,7 +62,7 @@ export default async function handleEmbed(client: ExtendedClient, interaction: C
     {
       name: interaction.options.getString('field-three-name') ?? '',
       value: interaction.options.getString('field-three-description') ?? '',
-    }
+    },
   ].filter(f => f.name && f.value); // Remove empty fields
 
   // Check if an embed is needed
@@ -70,7 +85,15 @@ export default async function handleEmbed(client: ExtendedClient, interaction: C
     hasEmbedContent = true;
   }
   if (fields.length > 0) {
-    embed.addFields(fields.map(f => ({ name: f.name, value: f.value, inline })));
+    embed.addFields(
+      fields.map(f => (
+        {
+          name: f.name,
+          value: f.value,
+          inline,
+        }
+      )),
+    );
     hasEmbedContent = true;
   }
 
@@ -89,7 +112,8 @@ export default async function handleEmbed(client: ExtendedClient, interaction: C
         attachment = new AttachmentBuilder(image);
       }
     } else {
-      return await interaction.editReply({ content: `${client.findEmoji('BOT-fail')} The provided image URL is invalid.`});
+      const message = await interaction.editReply({ content: `${client.findEmoji('BOT-fail')} The provided image URL is invalid.`});
+      return {success:false, message};
     }
   }
 
@@ -99,12 +123,13 @@ export default async function handleEmbed(client: ExtendedClient, interaction: C
   if (message) contentParts.push(message);
 
   if (!contentParts.length && !hasEmbedContent && !attachment) {
-    return interaction.editReply({ content: `${client.findEmoji('BOT-fail')} You must provide at least a message, mention, or embed content.`,});
+    const message = await interaction.editReply({ content: `${client.findEmoji('BOT-fail')} You must provide at least a message, mention, or embed content.`});
+    return {success:false, message};
   }
 
   const replyOptions: any = {
     content: contentParts.length ? contentParts.join(' ') : undefined,
-    allowedMentions: { parse: mention ? ['roles'] : [] }
+    allowedMentions: { parse: mention ? ['roles'] : [] },
   };
 
   if (attachment) {
@@ -117,5 +142,6 @@ export default async function handleEmbed(client: ExtendedClient, interaction: C
 
   await channel.send(replyOptions);
 
-  interaction.editReply(`${client.findEmoji('BOT-check')} Message has been send to <#${channel.id}>`);
+  const msg = await interaction.editReply(`${client.findEmoji('BOT-check')} Message has been send to <#${channel.id}>`);
+  return {success:false, message: msg};
 }

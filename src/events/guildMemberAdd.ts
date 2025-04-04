@@ -5,7 +5,10 @@ import { handleUserJoin } from './userJoin';
 
 export default {
   name: Events.GuildMemberAdd,
-  async execute(client: ExtendedClient, member: GuildMember) {
+  async execute(
+    client: ExtendedClient,
+    member: GuildMember,
+  ):Promise<void> {
     logger.debug(`❔ | UserJoined ${member.id}`);
 
     try {
@@ -20,5 +23,6 @@ export default {
         console.log(`Error Stack: ${err.stack}`);
       }
     }
-  }
+    return;
+  },
 };

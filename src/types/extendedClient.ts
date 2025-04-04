@@ -1,4 +1,4 @@
-import { Client, Collection } from 'discord.js';
+import { Client, Collection, ClientOptions } from 'discord.js';
 import { Command } from './commands';
 import { Button } from './buttons';
 import dotenv from 'dotenv';
@@ -11,7 +11,7 @@ export class ExtendedClient extends Client<true> {
   readonly buttons: Collection<string, Button>;
   readonly emoji: Collection<string, string>;
 
-  constructor(options: any) {
+  constructor(options: ClientOptions) {
     super(options);
     this.commands = new Collection();
     this.subcommands = new Collection();

@@ -5,7 +5,11 @@ import { logger } from '../utils';
 
 export default {
   name: Events.MessageReactionAdd,
-  async execute(client: ExtendedClient, reaction: MessageReaction, user: User) {
+  async execute(
+    client: ExtendedClient,
+    reaction: MessageReaction,
+    user: User,
+  ):Promise<void> {
     try {
       if (reaction.partial) await reaction.fetch();
       if (reaction.message.partial) await reaction.message.fetch();
@@ -19,5 +23,6 @@ export default {
     } catch (error) {
       console.error('Error handling star reaction:', error);
     }
+    return;
   },
 };

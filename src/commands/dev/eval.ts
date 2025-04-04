@@ -1,6 +1,7 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
+import { InteractionReturn } from '@/types/interactionReturn';
 
 export default {
   data: new SlashCommandBuilder()
@@ -9,16 +10,20 @@ export default {
     .addStringOption(option => option
       .setName('code')
       .setDescription('Code to evaluate.')
-      .setRequired(true)
+      .setRequired(true),
     ),
 
-  async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
-    logger.debug(`eval: Initiated`);
+  async execute(
+    client: ExtendedClient,
+    interaction: ChatInputCommandInteraction,
+  ):Promise<InteractionReturn> {
+    logger.debug('eval: Initiated');
 
     const allowedUserIds = ['705306248538488947', '1152694512829866065'];
 
     if (!allowedUserIds.includes(interaction.user.id)) {
-      return interaction.reply({ content: `${client.findEmoji('BOT-fail')} You do not have permission to use this command.`, flags: 'Ephemeral'});
+      const message = await interaction.reply({ content: `${client.findEmoji('BOT-fail')} You do not have permission to use this command.`, flags: 'Ephemeral'});
+      return {success:true, message};
     }
 
     const code = interaction.options.getString('code', true);
@@ -32,14 +37,16 @@ export default {
 
       logger.debug(`eval: Success, result: ${output}`);
 
-      return interaction.reply({
+      const message = await interaction.reply({
         content: `\`\`\`js\n${output}\n\`\`\``,
       });
+      return {success:true, message};
     } catch (error) {
       logger.error(`eval: Error occurred while evaluating code: ${error}`);
-      return interaction.reply({
+      const message = await interaction.reply({
         content: `Error: \`\`\`js\n${error}\n\`\`\``,
       });
+      return {success:false, message};
     }
-  }
+  },
 };

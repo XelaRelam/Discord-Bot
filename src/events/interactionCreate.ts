@@ -5,12 +5,19 @@ import { logger } from '../utils';
 
 export default {
   name: 'interactionCreate',
-  async execute(client: ExtendedClient, interaction: Interaction) {
+  async execute(
+    client: ExtendedClient,
+    interaction: Interaction,
+  ):Promise<void> {
     if (interaction.isChatInputCommand()) {
-      logger.debug(`❔ | Received interaction: Type=${interaction.type} from ${interaction.user.tag}`);
+      logger.debug(
+        `❔ | Received interaction: Type=${interaction.type} `+
+        `from ${interaction.user.tag}`,
+      );
       await handleInteraction(client, interaction);
     } else if (interaction.isButton()) {
       await buttonHandler(client, interaction);
     }
-  }
+    return;
+  },
 };

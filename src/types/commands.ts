@@ -1,10 +1,7 @@
-import { ChatInputCommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { ExtendedClient } from './extendedClient';
 
 export interface Command {
-  data: {
-    name: string;
-    description: string;
-  };
+  data: SlashCommandBuilder;
   execute: (client: ExtendedClient, interaction: ChatInputCommandInteraction<'cached'>) => Promise<void>;
 }

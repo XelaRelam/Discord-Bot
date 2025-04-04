@@ -9,8 +9,8 @@ const STARBOARD_CHANNEL_ID = '1252185956291842181';
 export const handleStarboard = async (
   client: ExtendedClient,
   reaction: MessageReaction | PartialMessageReaction,
-  user: User | PartialUser
-) => {
+  user: User | PartialUser,
+):Promise<void> => {
   try {
     if (reaction.partial) await reaction.fetch();
     if (reaction.message.partial) await reaction.message.fetch();
@@ -22,10 +22,16 @@ export const handleStarboard = async (
       return;
     }
 
-    if (!message.author || message.author.id === user.id) return; // Prevent self-starring
-    if (reaction.emoji.name !== '⭐') return; // Only track ⭐ reactions
+    if (
+      !message.author || message.author.id === user.id
+    ) {
+      return;
+    };
 
-    const starboardChannel = client.channels.cache.get(STARBOARD_CHANNEL_ID) as TextChannel
+    if (reaction.emoji.name !== '⭐') return;
+
+    const starboardChannel =
+      client.channels.cache.get(STARBOARD_CHANNEL_ID) as TextChannel
       ?? await client.channels.fetch(STARBOARD_CHANNEL_ID).catch(() => null);
 
     if (!starboardChannel || !starboardChannel.isTextBased()) {
@@ -34,8 +40,8 @@ export const handleStarboard = async (
     }
 
     // Fetch existing starboard entry
-    let starboardEntry = await prisma.starboard.findUnique({
-      where: { messageId: message.id }
+    const starboardEntry = await prisma.starboard.findUnique({
+      where: { messageId: message.id },
     });
 
     // Count stars
@@ -46,7 +52,8 @@ export const handleStarboard = async (
       if (starCount < STAR_THRESHOLD) {
         // Remove from starboard
         const starboardMsg = starboardEntry?.starboardId
-          ? await starboardChannel.messages.fetch(starboardEntry.starboardId).catch(() => null)
+          ? await starboardChannel.messages.fetch(starboardEntry.starboardId)
+            .catch(() => null)
           : null;
 
         if (starboardMsg) await starboardMsg.delete();
@@ -55,15 +62,18 @@ export const handleStarboard = async (
         // Update star count in the database
         await prisma.starboard.update({
           where: { messageId: message.id },
-          data: { starsCount: starCount }
+          data: { starsCount: starCount },
         });
 
         // Edit existing starboard message
         const starboardMsg = starboardEntry?.starboardId
-          ? await starboardChannel.messages.fetch(starboardEntry.starboardId).catch(() => null)
+          ? await starboardChannel.messages.fetch(starboardEntry.starboardId)
+            .catch(() => null)
           : null;
         if (starboardMsg) {
-          await starboardMsg.edit(`⭐ **${starCount}** - [Jump to message](<${message.url}>)`);
+          await starboardMsg.edit(
+            `⭐ **${starCount}** - [Jump to message](<${message.url}>)`,
+          );
         }
       }
     } else if (starCount >= STAR_THRESHOLD) {
@@ -74,7 +84,9 @@ export const handleStarboard = async (
           {
             author: {
               name: message.author?.tag || 'Unknown',
-              icon_url: message.author ? message.author.displayAvatarURL() : undefined,
+              icon_url: message.author
+                ? message.author.displayAvatarURL()
+                : undefined,
             },
             description: message.content || '*No text content*',
             color: 0xFFD700,
@@ -90,12 +102,14 @@ export const handleStarboard = async (
           starboardId: starMsg.id,
           channelId: message.channel.id,
           authorId: message.author.id,
-          starsCount: starCount
-        }
+          starsCount: starCount,
+        },
       });
     }
+    return;
   } catch (error) {
     logger.error('Error in starboard system:', error);
     console.log(error);
+    return;
   }
 };

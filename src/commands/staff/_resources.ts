@@ -1,18 +1,31 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, TextChannel } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, EmbedBuilder, TextChannel } from 'discord.js';
 import { ExtendedClient } from '../../types/extendedClient';
 import { botHasEmbedPerms, botHasSendPerms, botHasViewPerms } from '../../middleware/permissions';
+import { InteractionReturn } from '@/types/interactionReturn';
 
-export default async function handleResources(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
+export default async function handleResources(
+  client: ExtendedClient,
+  interaction: ChatInputCommandInteraction,
+):Promise<InteractionReturn> {
   const userIds = ['1152694512829866065', '745974902514909243', '705306248538488947'];
   const channel = client.channels.cache.get('1280972854862545008') as TextChannel;
 
   if (!userIds.includes(interaction.user.id)) {
-    await interaction.editReply({ content: `${client.findEmoji('BOT-fail')} You do not have permission to run this command`});
-    return;
+    const message = await interaction.editReply({ content: `${client.findEmoji('BOT-fail')} You do not have permission to run this command`});
+    return {success:false, message};
   }
 
-  if (!botHasSendPerms(client, channel) || !botHasEmbedPerms(client, channel) || !botHasViewPerms(client, channel)) {
-    return interaction.editReply({content: `${client.findEmoji('BOT-fail')} I do not have the right permissions for this channel, please inform staff.`});
+  if (
+    !botHasSendPerms(client, channel)
+    || !botHasEmbedPerms(client, channel)
+    || !botHasViewPerms(client, channel)
+  ) {
+    const message = await interaction.editReply(
+      {
+        content: `${client.findEmoji('BOT-fail')} I do not have the right permissions for this channel, please inform staff.`,
+      },
+    );
+    return {success:false, message};
   }
 
   /**
@@ -75,6 +88,11 @@ export default async function handleResources(client: ExtendedClient, interactio
     .setColor(parseInt('#A020F0'.replace(/^#/, ''), 16))
     .setTimestamp(new Date());
 
-  await channel.send({ embeds: [embed], components: [firstRow, secondaryRow, thirdRow] });
-  await interaction.editReply({content: `${client.findEmoji('BOT-check')} Embed has been send to <#${channel.id}>`});
+  await channel.send({
+    embeds: [embed],
+    components: [firstRow, secondaryRow, thirdRow],
+  });
+
+  const message = await interaction.editReply({content: `${client.findEmoji('BOT-check')} Embed has been send to <#${channel.id}>`});
+  return {success:true, message};
 }

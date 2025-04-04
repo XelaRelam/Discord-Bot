@@ -1,7 +1,7 @@
-import { ExtendedClient } from '../types/extendedClient';
+import { ExtendedClient } from '@/types/extendedClient';
 import { GatewayIntentBits, Partials } from 'discord.js';
-import { botConfig } from '../config/botConfig';
-import { logger } from '../utils';
+import { botConfig } from '@/config/botConfig';
+import { logger } from '@/utils';
 import { loadButtons, loadLoops, loadCommands, loadEvents } from './handler';
 
 const client = new ExtendedClient({
@@ -19,8 +19,8 @@ const client = new ExtendedClient({
     Partials.ThreadMember,
     Partials.Reaction,
     Partials.Message,
-    Partials.GuildScheduledEvent
-  ]
+    Partials.GuildScheduledEvent,
+  ],
 });
 
 (async () => {

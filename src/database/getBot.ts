@@ -1,6 +1,7 @@
-import { prisma } from ".";
+import { databaseReturn } from '@/types/database';
+import { prisma } from '.';
 
-export const getBot = async (botId: string) => {
+export const getBot = async (botId: string):Promise<databaseReturn> => {
   try {
     const bot = await prisma.bot.findUnique({
       where: { botId },

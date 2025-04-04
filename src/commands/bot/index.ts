@@ -4,6 +4,7 @@ import { logger } from '../../utils';
 import handleAddBot from './_add';
 import handleInfoBot from './_info';
 import handleEditBot from './_edit';
+import { InteractionReturn } from '@/types/interactionReturn';
 
 export default {
   data: new SlashCommandBuilder()
@@ -15,17 +16,17 @@ export default {
       .addStringOption(option => option
         .setName('bot-id')
         .setDescription('The ID of your bot')
-        .setRequired(true)
+        .setRequired(true),
       )
       .addStringOption(option => option
         .setName('prefix')
         .setDescription('The prefix of your bot ( / is also a prefix )')
-        .setRequired(true)
+        .setRequired(true),
       )
       .addStringOption(option => option
         .setName('description')
         .setDescription('A short description about what your bot does.')
-        .setRequired(false)
+        .setRequired(false),
       )
       .addStringOption(option => option
         .setName('library')
@@ -36,18 +37,18 @@ export default {
           { name: 'ForgeScript', value: 'forgescript' },
           { name: 'AOI.js', value: 'aoijs' },
           { name: 'Discord.php', value: 'discordphp' },
-          { name: "DSharpPlus", value: "dsharpplus" },
-          { name: "D++", value: "discordplusplus" },
-          { name: "DiscordGo", value: "discordgo" },
-          { name: "JavaCord", value: "javacord" },
-          { name: "Discordia", value: "discordia" },
-          { name: "Discord.js", value: "discordjs" },
-          { name: "NextCord", value: "nextcord" },
-          { name: "DiscordRB", value: "discordrb" },
-          { name: "Serenity", value: "serenity" },
-          { name : "Other", value: "other" }
-        )
-      )
+          { name: 'DSharpPlus', value: 'dsharpplus' },
+          { name: 'D++', value: 'discordplusplus' },
+          { name: 'DiscordGo', value: 'discordgo' },
+          { name: 'JavaCord', value: 'javacord' },
+          { name: 'Discordia', value: 'discordia' },
+          { name: 'Discord.js', value: 'discordjs' },
+          { name: 'NextCord', value: 'nextcord' },
+          { name: 'DiscordRB', value: 'discordrb' },
+          { name: 'Serenity', value: 'serenity' },
+          { name : 'Other', value: 'other' },
+        ),
+      ),
     )
     .addSubcommand(subcommand => subcommand
       .setName('info')
@@ -55,13 +56,13 @@ export default {
       .addUserOption(option => option
         .setName('bot')
         .setDescription('What bot do you want to see the info on?')
-        .setRequired(false)
+        .setRequired(false),
       )
       .addStringOption(option => option
         .setName('bot-id')
         .setDescription('bot ID if you prefer to use botID?')
-        .setRequired(false)
-      )
+        .setRequired(false),
+      ),
     )
     .addSubcommand(subcommand => subcommand
       .setName('edit')
@@ -69,12 +70,12 @@ export default {
       .addUserOption(option => option
         .setName('bot')
         .setDescription('What bot do you want to see the info on?')
-        .setRequired(true)
+        .setRequired(true),
       )
       .addIntegerOption(option => option
         .setName('invite')
         .setDescription('Change the invite code for your bot. (Admin is not allowed)')
-        .setRequired(false)
+        .setRequired(false),
       )
       .addStringOption(option => option
         .setName('description')
@@ -84,7 +85,7 @@ export default {
       .addStringOption(option => option
         .setName('prefix')
         .setDescription('Change the prefix of your discord bot.')
-        .setRequired(false)
+        .setRequired(false),
       )
       .addStringOption(option => option
         .setName('library')
@@ -95,41 +96,57 @@ export default {
           { name: 'ForgeScript', value: 'forgescript' },
           { name: 'AOI.js', value: 'aoijs' },
           { name: 'Discord.php', value: 'discordphp' },
-          { name: "DSharpPlus", value: "dsharpplus" },
-          { name: "D++", value: "discordplusplus" },
-          { name: "DiscordGo", value: "discordgo" },
-          { name: "JavaCord", value: "javacord" },
-          { name: "Discordia", value: "discordia" },
-          { name: "Discord.js", value: "discordjs" },
-          { name: "NextCord", value: "nextcord" },
-          { name: "DiscordRB", value: "discordrb" },
-          { name: "Serenity", value: "serenity" },
-          { name : "Other", value: "other" }
+          { name: 'DSharpPlus', value: 'dsharpplus' },
+          { name: 'D++', value: 'discordplusplus' },
+          { name: 'DiscordGo', value: 'discordgo' },
+          { name: 'JavaCord', value: 'javacord' },
+          { name: 'Discordia', value: 'discordia' },
+          { name: 'Discord.js', value: 'discordjs' },
+          { name: 'NextCord', value: 'nextcord' },
+          { name: 'DiscordRB', value: 'discordrb' },
+          { name: 'Serenity', value: 'serenity' },
+          { name : 'Other', value: 'other' },
         )
-        .setRequired(false)
-      )
+        .setRequired(false),
+      ),
     ),
-  async execute(client: ExtendedClient, interaction: ChatInputCommandInteraction) {
-    await interaction.deferReply({flags: "Ephemeral"});
+  async execute(
+    client: ExtendedClient,
+    interaction: ChatInputCommandInteraction,
+  ):Promise<InteractionReturn> {
+    await interaction.deferReply({flags: 'Ephemeral'});
+    let result: InteractionReturn = { success: false };
+
     try {
-      if (!(interaction.user.id === '705306248538488947') && false) {
-        return interaction.editReply({ content: `${client.findEmoji('BOT-fail')} This command is disabled at this moment.` });
-      }
 
       if (interaction.options.getSubcommand() === 'add') {
-        await handleAddBot(client, interaction);
+        result = await handleAddBot(client, interaction);
       } else if (interaction.options.getSubcommand() === 'info') {
-        await handleInfoBot(client, interaction);
+        result = await handleInfoBot(client, interaction);
       } else if (interaction.options.getSubcommand() === 'edit') {
-        await handleEditBot(client, interaction);
+        result = await handleEditBot(client, interaction);
+      } else {
+        result = {success: false};
       }
+
+      if (result.success) {
+        return {success: true, message: result.message};
+      }
+
+      return {success:false};
     } catch (err) {
-      logger.error(`❌ | Error while trying to respond to "${interaction.commandName}.${interaction.options.getSubcommand()}" interaction. ${err}`);
-      interaction.editReply(`${client.findEmoji('BOT-fail')} There was an Internal error while trying to resolve your request, please inform staff.`);
+      logger.error(
+        '❌ | Error while trying to respond to '+
+        `"${interaction.commandName}.${interaction.options.getSubcommand()}" `+
+        'interaction. ' +
+        err,
+      );
+      const message = await interaction.editReply(`${client.findEmoji('BOT-fail')} There was an Internal error while trying to resolve your request, please inform staff.`);
       if (err instanceof Error) {
         console.error('Error stack:', err.stack);
       }
-      return;
+      return {success:false, message}
+      ;
     }
-  }
+  },
 };

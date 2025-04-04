@@ -20,7 +20,7 @@ const unregisterCommands = async () => {
 
     console.log("✅ | Successfully unregistered all public slash commands!");
   } catch (error) {
-    console.error("❌ | Failed to unregister commands:", error);
+    console.error("'❌ | Failed to unregister commands:' error);
     process.exit(1);
   }
 };

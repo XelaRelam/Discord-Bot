@@ -5,7 +5,11 @@ import { logger } from '../utils';
 
 export default {
   name: Events.MessageReactionRemove,
-  async execute(client: ExtendedClient, reaction: MessageReaction, user: User) {
+  async execute(
+    client: ExtendedClient,
+    reaction: MessageReaction,
+    user: User,
+  ):Promise<void> {
     try {
       if (reaction.partial) await reaction.fetch();
       if (reaction.message.partial) await reaction.message.fetch();
@@ -16,8 +20,10 @@ export default {
       if (reaction.emoji.name === '⭐') {
         await handleStarboard(client, reaction, user);
       }
+      return;
     } catch (error) {
       console.error('Error handling star removal:', error);
+      return;
     }
   },
 };

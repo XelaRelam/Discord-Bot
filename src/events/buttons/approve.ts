@@ -5,24 +5,29 @@ import * as database from './../../database';
 import { logger } from '../../utils';
 
 export default {
-  customId: (id: string) => id.startsWith('approve-'),
-  async execute(client: ExtendedClient, interaction: ButtonInteraction) {
+  customId: (id: string): boolean => id.startsWith('approve-'),
+  async execute(
+    client: ExtendedClient,
+    interaction: ButtonInteraction,
+  ):Promise<void> {
     const botId = interaction.customId.split('-')[1];
     const userId = interaction.customId.split('-')[2];
     try {
       const publicChannel = client.channels.cache.get('1235263212497141911') as TextChannel;
-      let botInfo = client.users.fetch(botId);
+      const botInfo = client.users.fetch(botId);
       const origin = await interaction.message.fetch();
       const botData = await database.getBot(botId);
       const guild = await client.guilds.fetch(`${interaction.guildId}`);
       const user = await client.users.fetch(userId);
 
       if (!botData.success) {
-        return interaction.reply({ content: `${client.findEmoji('BOT-fail')} This Bot was not found in the database.`, flags: "Ephemeral"});
+        await interaction.reply({ content: `${client.findEmoji('BOT-fail')} This Bot was not found in the database.`, flags: 'Ephemeral'});
+        return;
       }
 
       if (!(await hasRole(client, interaction.user.id, '1235257572060303480', client.env('DISCORD_GUILD_ID')!))) {
-        return interaction.reply({ content: `${client.findEmoji('BOT-fail')} You do not have the right role for this.`, flags: "Ephemeral"});
+        await interaction.reply({ content: `${client.findEmoji('BOT-fail')} You do not have the right role for this.`, flags: 'Ephemeral'});
+        return;
       }
 
       /**
@@ -30,7 +35,8 @@ export default {
        */
       let botInfoFieldValue =
         `<@${botId}> ~ ${botId}\n` +
-        `**Invite:** [Click](https://discord.com/api/oauth2/authorize?client_id=${botId}&permissions=0&scope=bot)\n` +
+        '**Invite:** [Click](https://discord.com/api/oauth2/authorize'+
+        `?client_id=${botId}&permissions=0&scope=bot)\n` +
         `**Prefix**: \`${botData.data?.prefix}\`\n` +
         `**Developer**: <@${botData.data?.userId}> ~ ${botData.data?.userId}`;
 
@@ -39,10 +45,12 @@ export default {
       }
 
       const dmEmbed = new EmbedBuilder()
-        .setTitle(`Bot Approved.`)
+        .setTitle('Bot Approved.')
         .setThumbnail((await botInfo).avatarURL())
         .setDescription(
-          `Hey <@${userId}>, I'm delighted to say that your bot <@${botId}> has been approved.`
+          `Hey <@${userId}>,`+
+          `I'm delighted to say that your bot <@${botId}> `+
+          'has been approved.',
         )
         .setFooter({text: 'Message send from "XelaRelam".', iconURL: `${guild.iconURL({extension: 'webp', size: 512})}`})
         .setColor(parseInt('#00FFFF'.replace(/^#/, ''), 16));
@@ -50,24 +58,29 @@ export default {
       const embed = new EmbedBuilder()
         .setColor(parseInt('#75FF70'.replace(/^#/, ''), 16))
         .setTitle('Bot Approved!')
-        .setDescription(`<@${userId}>'s bot <@${botId}> has been approved by <@${interaction.user.id}>`)
+        .setDescription(
+          `<@${userId}>'s bot <@${botId}> `+
+          `has been approved by <@${interaction.user.id}>`,
+        )
         .setThumbnail((await botInfo).avatarURL());
       const originEmbed = new EmbedBuilder()
         .setTitle('Bot approved!')
         .setThumbnail((await botInfo).avatarURL())
         .addFields(
           {
-            name: `BotInfo`,
+            name: 'BotInfo',
             value: botInfoFieldValue,
-            inline: true
+            inline: true,
           },
           {
-            name:`Approved By`,
+            name:'Approved By',
             value:
               `<@${interaction.user.id}> ~ ${interaction.user.id}\n`+
-              `<t:${Math.round(Date.now() / 1000)}:R> ~ <t:${Math.round(Date.now() / 1000)}:d>`,
-            inline: true
-          }
+              `<t:${Math.round(Date.now() / 1000)}:R>`+
+              ' ~ '+
+              `<t:${Math.round(Date.now() / 1000)}:d>`,
+            inline: true,
+          },
         )
         .setColor(parseInt('#75FF70'.replace(/^#/, ''), 16));
 
@@ -80,7 +93,7 @@ export default {
       const botStats = {
         awaited: false,
         added: true,
-        approvedBy: `${interaction.user.id}`
+        approvedBy: `${interaction.user.id}`,
       };
       database.upsertBotData(user.id, botId, botStats);
 
@@ -99,12 +112,18 @@ export default {
       }
 
     } catch (err) {
-      logger.error(`❌ | Error while trying to respond to "resources-*" button interaction. ${err}`);
-      interaction.editReply(`${client.findEmoji('BOT-fail')} There was an Internal error while trying to resolve your request, please inform staff.`);
+      logger.error(
+        '❌ | Error while trying to respond to "resources-*" button interaction. '+
+        err,
+      );
+      interaction.editReply(
+        `${client.findEmoji('BOT-fail')}`+
+        'There was an Internal error while trying to resolve your request, please inform staff.',
+      );
       if (err instanceof Error) {
         console.error('Error stack:', err.stack);
       }
       return;
     }
-  }
+  },
 };

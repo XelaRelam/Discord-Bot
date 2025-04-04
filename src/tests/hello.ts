@@ -1,3 +1,3 @@
-import { logger } from "../utils";
+import { logger } from '../utils';
 
-logger.info("I work");
+logger.info('I work');

@@ -1,9 +1,11 @@
-import { ExtendedClient } from '../../types/extendedClient';
+import { ExtendedClient } from '@/types/extendedClient';
 import fs from 'fs';
 import path from 'path';
-import { logger } from '../../utils';
+import { logger } from '@/utils';
 
-export const loadLoops = async (client: ExtendedClient) => {
+export const loadLoops = async (
+  client: ExtendedClient,
+):Promise<void> => {
   const loopsPath = path.join(__dirname, '../../loops');
   const loopFiles = fs.readdirSync(loopsPath)
     .filter(file => file.endsWith('.js') && !file.startsWith('_'));
@@ -19,4 +21,5 @@ export const loadLoops = async (client: ExtendedClient) => {
       logger.warn(`⚠️ | Skipping invalid loop file: ${file}`);
     }
   }
+  return;
 };

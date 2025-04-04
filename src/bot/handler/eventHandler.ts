@@ -1,9 +1,11 @@
-import { logger } from '../../utils';
+import { logger } from '@/utils';
 import { Client } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
 
-export const loadEvents = async (client: Client) => {
+export const loadEvents = async (
+  client: Client,
+):Promise<void> => {
   const eventsPath = path.join(__dirname, '../../events');
   const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith('.js'));
 
@@ -21,4 +23,5 @@ export const loadEvents = async (client: Client) => {
       logger.warn(`⚠️ | Skipping invalid event file: ${file}`);
     }
   }
+  return;
 };

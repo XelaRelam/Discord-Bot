@@ -1,11 +1,9 @@
 import { ExtendedClient } from '../types/extendedClient';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/database';
 import { logger } from '../utils';
 import { ThreadChannel } from 'discord.js';
 
-const prisma = new PrismaClient();
-
-export default (client: ExtendedClient) => {
+export default (client: ExtendedClient):Promise<void> => {
   const checkInactiveThreads = async () => {
     const now = Date.now();
     const inactiveThreads = await prisma.thread.findMany({
@@ -17,7 +15,8 @@ export default (client: ExtendedClient) => {
     });
 
     for (const thread of inactiveThreads) {
-      const discordThread = await client.channels.fetch(thread.threadId) as ThreadChannel;
+      const discordThread =
+        await client.channels.fetch(thread.threadId) as ThreadChannel;
       if (discordThread) {
         await discordThread.delete('Thread inactive for 24 hours');
         await prisma.thread.delete({
@@ -28,5 +27,11 @@ export default (client: ExtendedClient) => {
     }
   };
 
-  setInterval(() => checkInactiveThreads(), 30 * 60 * 1000);
+  const startChecking = async () => {
+    setInterval(() => checkInactiveThreads(), 30 * 60 * 1000);
+  };
+
+  startChecking();
+
+  return Promise.resolve();
 };

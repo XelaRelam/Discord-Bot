@@ -1,18 +1,24 @@
-import { Client, TextChannel, Permissions, PermissionResolvable } from 'discord.js';
+import { Client, TextChannel, PermissionResolvable } from 'discord.js';
 
 /**
- * Checks if the user or bot has the specified permissions in a specific channel.
- * @param {Client} client - The discord.js client.
- * @param {string} userID - The ID of the user/bot whose permissions to check.
- * @param {TextChannel} channel - The channel where the permissions need to be checked.
- * @param {PermissionResolvable[]} permissions - List of permissions to check (e.g., ['MANAGE_THREADS', 'SEND_MESSAGES_IN_THREADS']).
- * @returns {Promise<boolean>} - Returns `true` if the user/bot has all the permissions, `false` otherwise.
+ * Checks if the user or bot has the specified permissions in a channel.
+ * @param {Client} client
+ *  ↳ The discord.js client.
+ * @param {string} userID
+ *  ↳ The ID of the user/bot whose permissions to check.
+ * @param {TextChannel} channel
+ *  ↳ The channel where the permissions need to be checked.
+ * @param {PermissionResolvable[]} permissions
+ *  ↳ List of permissions to check
+ *  ↳ (e.g., ['MANAGE_THREADS', 'SEND_MESSAGES_IN_THREADS']).
+ * @returns {Promise<boolean>}
+ *  ↳ Returns `true` if the user/bot has all the permissions.
  */
 export async function hasPerms(
   client: Client,
   userID: string,
   channel: TextChannel,
-  permissions: PermissionResolvable[]
+  permissions: PermissionResolvable[],
 ): Promise<boolean> {
   try {
     const member = await channel.guild.members.fetch(userID);

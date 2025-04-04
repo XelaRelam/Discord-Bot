@@ -8,4 +8,12 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export { upsertUserData, getBotInfo, getBot, upsertBotData, getThread, getUserBots, prisma };
+export {
+  upsertUserData,
+  getBotInfo,
+  getBot,
+  upsertBotData,
+  getThread,
+  getUserBots,
+  prisma,
+};

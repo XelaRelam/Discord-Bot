@@ -3,10 +3,12 @@ import { ExtendedClient } from '../../types/extendedClient';
 import { logger } from '../../utils';
 
 export default {
-  customId: (id: string) => id.startsWith('resources-'),
-  async execute(client: ExtendedClient, interaction: ButtonInteraction) {
+  customId: (id: string): boolean => id.startsWith('resources-'),
+  async execute(
+    client: ExtendedClient,
+    interaction: ButtonInteraction,
+  ):Promise<void> {
     const type = interaction.customId.split('-')[1];
-    const userId = interaction.user.id;
     await interaction.deferReply({flags: 'Ephemeral'});
 
     try{
@@ -19,7 +21,7 @@ export default {
               'The legacy package for older videos, perfect for beginners but not built for scale. This is the go-to if you are new to development here on discord!\n\n' +
               '📦 - Dev Toolkit\n' +
               'All new and improved with some much needed fresh paint, this package is built to last and comes with everything a starting developer could need, how awesome is that?\n\n' +
-              '🏅 - Badge Images\nThis is just an archive of images for the older Badge Command, this is not a package for running bots!'
+              '🏅 - Badge Images\nThis is just an archive of images for the older Badge Command, this is not a package for running bots!',
             )
             .setColor('#A020F0')
             .setTimestamp(new Date());
@@ -51,7 +53,7 @@ export default {
             .setDescription(
               'Which database are you looking to use?\n' +
               '🍃 - MongoDB : Easy for beginners, very flexible and scalable, can be a bottleneck if not used correctly.\n' +
-              '🐬 - SQL : The big grand daddy of databases, very powerful and fast but difficult to learn properly'
+              '🐬 - SQL : The big grand daddy of databases, very powerful and fast but difficult to learn properly',
             )
             .setColor('#A020F0')
             .setTimestamp(new Date());
@@ -91,10 +93,10 @@ export default {
               '📕 - [Official Discord API](https://discord.com/developers/docs/intro)\n' +
               '📕 - [Node.js Docs](https://nodejs.org/en/docs/)\n' +
               '📚 - [MDN - Event Loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop)\n' +
-              '📚 - [MDN - Memory](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)'
+              '📚 - [MDN - Memory](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)',
             )
-            .setColor('#A020F0')
-            .setTimestamp(new Date());
+            .setTimestamp(new Date())
+            .setColor(parseInt('#A020F0'.replace(/^#/, ''), 16));
 
           const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
@@ -123,7 +125,10 @@ export default {
         }
       }
     } catch (err) {
-      logger.error(`❌ | Error while trying to respond to "resources-*" button interaction. ${err}`);
+      logger.error(
+        '❌ | Error while trying to respond to "resources-*" button interaction.'+
+        err,
+      );
       interaction.editReply(`${client.findEmoji('BOT-fail')} There was an Internal error while trying to resolve your request, please inform staff.`);
       if (err instanceof Error) {
         console.error('Error stack:', err.stack);

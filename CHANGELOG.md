@@ -4,11 +4,9 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [1.7.1](https://github.com/XelaRelam/Discord-Bot/compare/v1.7.0...v1.7.1) (2025-03-29)
 
-
 ### Features
 
 * Added self-promo. ([b31f99f](https://github.com/XelaRelam/Discord-Bot/commit/b31f99f6f9b245f27489aaec59a0f0aa276a5f3e))
-
 
 ### Bug Fixes
 
@@ -18,13 +16,11 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [1.7.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.6.0...v1.7.0) (2025-03-29)
 
-
 ### Features
 
 * Added a function to see if a user has certain perms in a channel. ([037ff66](https://github.com/XelaRelam/Discord-Bot/commit/037ff66f1ec0f6012786c71600230f4b0ef7b12a))
 * Added Loop Handler. ([9163cd5](https://github.com/XelaRelam/Discord-Bot/commit/9163cd50f34b2269142e5abd1b1617063ff58589))
 * Added Thread Create command and handler. ([16090d6](https://github.com/XelaRelam/Discord-Bot/commit/16090d6081d6a1319428c2f525696ff4976a05dd))
-
 
 ### Bug Fixes
 
@@ -33,7 +29,6 @@ All notable changes to this project will be documented in this file. See [commit
 * Removed Deploy:Commands script and now deploys commands on start. ([d6032c1](https://github.com/XelaRelam/Discord-Bot/commit/d6032c1028e7bcc6b1b8c8d3ad98ab3491c5c293))
 
 ## [1.6.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.5.0...v1.6.0) (2025-03-28)
-
 
 ### Features
 
@@ -46,17 +41,14 @@ All notable changes to this project will be documented in this file. See [commit
 * Button for Bot Approval now works. ([c64cbfa](https://github.com/XelaRelam/Discord-Bot/commit/c64cbfa35d26fe2c096ca2642af0209bbc666dbf))
 * Updated Database and added more Database Functions. ([7fa5e96](https://github.com/XelaRelam/Discord-Bot/commit/7fa5e961349e03fd85d422a02f67169912d7c5f5))
 
-
 ### Bug Fixes
 
 * Added ApprovedBy to bot model. ([840f5dc](https://github.com/XelaRelam/Discord-Bot/commit/840f5dc407af147004af45d28d0b12219ce78f23))
 * Added description input for bot edit. ([874791c](https://github.com/XelaRelam/Discord-Bot/commit/874791cc60000f0f39242b99bb280d43dfabd4a7))
 
-
 ### Chores
 
 * Updated gitIgnore. ([4bfbd2e](https://github.com/XelaRelam/Discord-Bot/commit/4bfbd2eaa603e7f181aa379343a17e92d05914c7))
-
 
 ### Code Refactoring
 
@@ -65,7 +57,6 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [1.5.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.4.0...v1.5.0) (2025-03-27)
 
-
 ### Features
 
 * Added Bot Add command. ([976182d](https://github.com/XelaRelam/Discord-Bot/commit/976182d387cc5dc06d8910dbf051d7606b8f2a3f))
@@ -73,12 +64,10 @@ All notable changes to this project will be documented in this file. See [commit
 * Function to check Perms. ([4847498](https://github.com/XelaRelam/Discord-Bot/commit/4847498f2cb9578359936c3b2fb4ea14133d8706))
 * function to see if user exists. ([18bb908](https://github.com/XelaRelam/Discord-Bot/commit/18bb908e7482bd9c2d13f1c902c234036b3ec826))
 
-
 ### Bug Fixes
 
 * Add Bot command. ([a8a6a22](https://github.com/XelaRelam/Discord-Bot/commit/a8a6a2205733d1de8bd4c3fb83ab381efb5e8800))
 * Added bot now works fully, no errors. (i hope) ([91b9fab](https://github.com/XelaRelam/Discord-Bot/commit/91b9fab61e3de9aea288ec173513dd35a49a902c))
-
 
 ### Code Refactoring
 
@@ -86,12 +75,10 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [1.4.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.3.0...v1.4.0) (2025-03-26)
 
-
 ### Features
 
 * Added A Welcome System. ([d3715f7](https://github.com/XelaRelam/Discord-Bot/commit/d3715f74cb2c9b54a9f68b5ddf61dbfc465c12ca))
 * Added stickyPost for scripts. ([28766c0](https://github.com/XelaRelam/Discord-Bot/commit/28766c031273e89c4d53390243186e0af233580b))
-
 
 ### Chores
 
@@ -99,17 +86,14 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [1.3.0](https://github.com/XelaRelam/Discord-Bot/compare/v1.2.0...v1.3.0) (2025-03-25)
 
-
 ### Features
 
 * Added onReady event. ([8f0d8e3](https://github.com/XelaRelam/Discord-Bot/commit/8f0d8e32f9b94f2c1559e5679df812a252f8a4a8))
 * Added starboard. ([2efa9bb](https://github.com/XelaRelam/Discord-Bot/commit/2efa9bb19109231f17bbe88cc405ca7af517fef5))
 
-
 ### Bug Fixes
 
 * Embed now uses role instead of perms. ([0e48900](https://github.com/XelaRelam/Discord-Bot/commit/0e489002bfdada858d5e3547412cce093809c79d))
-
 
 ### Code Refactoring
 
@@ -151,7 +135,6 @@ All notable changes to this project will be documented in this file. See [commit
 
 * Commands Cleanup. ([7861869](https://github.com/XelaRelam/Discord-Bot/commit/78618699dcfe8c8cab865adb7329bc63bbd90719))
 * Made database scheme ([66ab7ed](https://github.com/XelaRelam/Discord-Bot/commit/66ab7ede8fa96c3d604319d834def754340e6fe9))
-
 
 ### Code Refactoring
 
