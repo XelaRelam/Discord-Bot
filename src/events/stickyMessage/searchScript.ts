@@ -8,6 +8,7 @@ export const searchScript = async (
   client: ExtendedClient,
   message: Message,
 ):Promise<void> => {
+  if ((client.env('ENVIRONMENT')) === 'dev') return;
   if (
     message.author.bot && message.author.id !== client.user?.id
   ) { // handle sticky If message is sent (not the bot itself)

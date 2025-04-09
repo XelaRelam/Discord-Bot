@@ -8,11 +8,16 @@ datasource db {
 }
 
 model User {
-  bots          Bot[] /* User's Bots */
-  user_id       String   @id @unique /* UserId */
-  createdAt     DateTime @default(now()) /* User Joined Date */
-  userBanned    Boolean  @default(false) /* If Bot is banned */
-  hasAwaitedBot Boolean  @default(false) /* If user has a bot in queue */
+  user_id       String   @id @unique
+  createdAt     DateTime @default(now())
+  userBanned    Boolean  @default(false)
+  hasAwaitedBot Boolean  @default(false)
+  hasLeftServer Boolean  @default(false)
+
+  // Relations
+  bots         Bot[]
+  staffMember  StaffMember? @relation("UserToStaff")
+  ratingsGiven Rating[]     @relation("RatingsByUser")
 }
 
 model Bot {
@@ -59,4 +64,34 @@ model StickyMessage {
   id        Int    @id @default(autoincrement())
   channelID String @unique
   messageID String
+}
+
+model StaffMember {
+  id          String          @id @default(cuid())
+  userId      String          @unique
+  user        User            @relation("UserToStaff", fields: [userId], references: [user_id])
+  positions   StaffPosition[]
+  ratings     Rating[]        @relation("RatingsForStaff")
+  totalRating Float           @default(0)
+  ratingCount Int             @default(0)
+}
+
+model Rating {
+  id         String   @id @default(cuid())
+  rating     Int
+  transcript String
+  createdAt  DateTime @default(now())
+
+  staffId     String
+  staffMember StaffMember @relation("RatingsForStaff", fields: [staffId], references: [id])
+
+  userId String
+  user   User   @relation("RatingsByUser", fields: [userId], references: [user_id])
+}
+
+model StaffPosition {
+  id            String      @id @default(cuid())
+  name          String // e.g. "JavaScript", "Python"
+  staffMemberId String
+  staffMember   StaffMember @relation(fields: [staffMemberId], references: [id])
 }

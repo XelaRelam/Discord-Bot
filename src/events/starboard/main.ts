@@ -11,6 +11,8 @@ export const handleStarboard = async (
   reaction: MessageReaction | PartialMessageReaction,
   user: User | PartialUser,
 ):Promise<void> => {
+  if ((client.env('ENVIRONMENT')) === 'dev') return;
+
   try {
     if (reaction.partial) await reaction.fetch();
     if (reaction.message.partial) await reaction.message.fetch();

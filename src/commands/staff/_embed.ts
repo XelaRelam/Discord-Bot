@@ -41,7 +41,7 @@ export default async function handleEmbed(
   const color = interaction.options.getString('color') || '#FFFFFF';
   const title = interaction.options.getString('title');
   const author = interaction.options.getString('author');
-  const description = interaction.options.getString('description');
+  const description = interaction.options.getString('description')?.replace(/\\n/g, '\n');;
   const footer = interaction.options.getString('footer');
   const inline = interaction.options.getBoolean('inline') ?? false;
   const thumbnail = interaction.options.getBoolean('thumbnail') ?? false;
@@ -53,15 +53,15 @@ export default async function handleEmbed(
   const fields = [
     {
       name: interaction.options.getString('field-one-name') ?? '',
-      value: interaction.options.getString('field-one-content') ?? '',
+      value: interaction.options.getString('field-one-content')?.replace(/\\n/g, '\n') ?? '',
     },
     {
       name: interaction.options.getString('field-two-name') ?? '',
-      value: interaction.options.getString('field-two-description') ?? '', // Notice "description" for field two
+      value: interaction.options.getString('field-two-description')?.replace(/\\n/g, '\n') ?? '', // Notice "description" for field two
     },
     {
       name: interaction.options.getString('field-three-name') ?? '',
-      value: interaction.options.getString('field-three-description') ?? '',
+      value: interaction.options.getString('field-three-description')?.replace(/\\n/g, '\n') ?? '',
     },
   ].filter(f => f.name && f.value); // Remove empty fields
 

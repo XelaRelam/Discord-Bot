@@ -13,7 +13,7 @@
     "lint": "eslint '**/*.{js,ts,tsx}' --cache && git add . && git commit -m 'style: lint'",
     "release": "npx commit-and-tag-version",
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "tsc && node dist/index.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node -r src/bot/index.ts",
     "test": "npm run build && node dist/tests/hello",
     "db": "npx prisma format && npx prisma generate && npx prisma db push",

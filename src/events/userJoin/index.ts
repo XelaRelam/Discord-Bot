@@ -11,6 +11,8 @@ export const handleUserJoin = async (
   member: GuildMember,
   retryCount = 0,
 ):Promise<void> => {
+  if ((client.env('ENVIRONMENT')) === 'dev') return;
+
   if (member.user.bot) return;
 
   const welcomeChannel = member.guild.channels.cache.get('1277761468875411520') as TextChannel;

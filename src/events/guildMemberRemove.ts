@@ -42,6 +42,11 @@ export default {
           await database.prisma.bot.delete({
             where: { botId: bot.botId }
           });
+
+          await database.prisma.user.update({
+            where: { user_id: member.id },
+            data: { hasLeftServer: true },
+          });
         } catch (botError) {
           logger.error(`Failed to kick/delete bot ${bot.botId}: ${botError}`);
         }

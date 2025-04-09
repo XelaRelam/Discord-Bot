@@ -4,6 +4,7 @@ import { logger } from '../../utils';
 import handleResources from './_resources';
 import handleEmbed from './_embed';
 import { InteractionReturn } from '@/types/interactionReturn';
+import handleAssign from './_assign';
 
 export default {
   data: new SlashCommandBuilder()
@@ -32,19 +33,36 @@ export default {
     .addSubcommand(subCommand => subCommand
       .setName('resources')
       .setDescription('Generate a message or embed (staff)'),
+    )
+    .addSubcommand(subCommand => subCommand
+      .setName('assign')
+      .setDescription('Assign a staff member (staff)')
+      .addUserOption(option =>
+        option.setName('user')
+        .setDescription('The user to assign the staff role to.')
+        .setRequired(true)
+      )
+      .addRoleOption(option =>
+        option.setName('position')
+        .setDescription('The position the user should have.')
+        .setRequired(true)
+      )
     ),
+
   async execute(
     client: ExtendedClient,
     interaction: ChatInputCommandInteraction,
   ):Promise<InteractionReturn> {
     await interaction.deferReply({flags: 'Ephemeral'});
     let result: InteractionReturn = { success: false };
-
+    const subCommand = interaction.options.getSubcommand()
     try {
-      if (interaction.options.getSubcommand() === 'resources') {
+      if (subCommand === 'resources') {
         result = await handleResources(client, interaction);
-      } else if (interaction.options.getSubcommand() === 'embed') {
+      } else if (subCommand === 'embed') {
         result = await handleEmbed(client, interaction);
+      } else if (subCommand === 'assign') {
+        result = await handleAssign(client, interaction);
       }
       if (result.success) {
         return { success: true, message: result.message };  // This is fine now
