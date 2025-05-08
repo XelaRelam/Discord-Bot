@@ -12,12 +12,15 @@ export const searchScript = async (
   if (
     !message.author.bot && message.author.id !== client.user?.id
   ) { // handle sticky If message is sent (not the bot itself)
+    console.log('1');
     if (!STICKY_CHANNELS.has(message.channel.id)) return;
+    console.log('2');
     const channel = message.channel as TextChannel;
     try {
       const lastSticky = await prisma.stickyMessage.findFirst({
         where: { channelID: channel.id },
       });
+      console.log('3');
 
       /**
        * @description Deletes the last sticky Message
