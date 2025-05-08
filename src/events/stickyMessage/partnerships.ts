@@ -10,7 +10,7 @@ export const searchScript = async (
 ):Promise<void> => {
   if ((client.env('ENVIRONMENT')) === 'dev') return;
   if (
-    message.author.bot && message.author.id !== client.user?.id
+    !message.author.bot && message.author.id !== client.user?.id
   ) { // handle sticky If message is sent (not the bot itself)
     if (!STICKY_CHANNELS.has(message.channel.id)) return;
     const channel = message.channel as TextChannel;
