@@ -4,7 +4,7 @@ import { prisma } from '../../database';
 
 const STICKY_CHANNELS = new Set(['1235236731461177414']);
 
-export const searchScript = async (
+export const partnership = async (
   client: ExtendedClient,
   message: Message,
 ):Promise<void> => {
