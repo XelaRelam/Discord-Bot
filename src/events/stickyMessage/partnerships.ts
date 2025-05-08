@@ -2,7 +2,7 @@ import { ExtendedClient } from '../../types/extendedClient';
 import { Message, TextChannel } from 'discord.js';
 import { prisma } from '../../database';
 
-const STICKY_CHANNELS = new Set(['1266455854811578379']);
+const STICKY_CHANNELS = new Set(['1235236731461177414']);
 
 export const searchScript = async (
   client: ExtendedClient,
