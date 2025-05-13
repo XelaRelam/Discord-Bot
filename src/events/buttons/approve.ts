@@ -47,6 +47,10 @@ export default {
 
         await origin.edit({embeds: [cancelEmbed],components: []});
         publicChannel.send({content: `<@${userId}>`, embeds: [embed] });    
+        const userData = {
+          hasAwaitedBot: false,
+        };
+        database.upsertUserData(user.id, userData);  
         return;
       }
 
