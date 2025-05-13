@@ -13,6 +13,24 @@ export default {
   ):Promise<void> {
     const botId = interaction.customId.split('-')[1];
     const userId = interaction.customId.split('-')[2];
+    const botData = await database.getBot(botId);
+
+
+    /* If User has left the server */
+    if (!botData) {
+      const newEmbed = new EmbedBuilder()
+        .setTitle('Bot Canceled!')
+        .setThumbnail('https://cdn.lynnux.xyz/images/No-Server_Icon-found.png')
+        .addFields(
+          {
+            name: `Reason For Cancellation`,
+            value: `Developer has left the server.`,
+            inline: false
+          }
+        )
+        .setColor(parseInt('#FF5151'.replace(/^#/, ''), 16));
+    };
+    
     try {
       const publicChannel = client.channels.cache.get('1235263212497141911') as TextChannel;
       const botInfo = client.users.fetch(botId);
