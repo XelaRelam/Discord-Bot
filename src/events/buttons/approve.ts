@@ -13,24 +13,7 @@ export default {
   ):Promise<void> {
     const botId = interaction.customId.split('-')[1];
     const userId = interaction.customId.split('-')[2];
-    const botData = await database.getBot(botId);
 
-
-    /* If User has left the server */
-    if (!botData) {
-      const newEmbed = new EmbedBuilder()
-        .setTitle('Bot Canceled!')
-        .setThumbnail('https://cdn.lynnux.xyz/images/No-Server_Icon-found.png')
-        .addFields(
-          {
-            name: `Reason For Cancellation`,
-            value: `Developer has left the server.`,
-            inline: false
-          }
-        )
-        .setColor(parseInt('#FF5151'.replace(/^#/, ''), 16));
-    };
-    
     try {
       const publicChannel = client.channels.cache.get('1235263212497141911') as TextChannel;
       const botInfo = client.users.fetch(botId);
@@ -39,15 +22,34 @@ export default {
       const guild = await client.guilds.fetch(`${interaction.guildId}`);
       const user = await client.users.fetch(userId);
 
-      if (!botData.success) {
-        await interaction.reply({ content: `${client.findEmoji('BOT-fail')} This Bot was not found in the database.`, flags: 'Ephemeral'});
-        return;
-      }
-
       if (!(await hasRole(client, interaction.user.id, '1235257572060303480', client.env('DISCORD_GUILD_ID')!))) {
         await interaction.reply({ content: `${client.findEmoji('BOT-fail')} You do not have the right role for this.`, flags: 'Ephemeral'});
         return;
       }
+
+      /* If User has left the server */
+      if (!botData.success) {
+        await interaction.reply({ content: `${client.findEmoji('BOT-fail')} This Bot was not found in the database.\nCheck if the develop left the server, if this is a error please contact <@705306248538488947>.`, flags: 'Ephemeral'});
+        let cancelEmbed = new EmbedBuilder()
+          .setTitle('Bot Canceled.')
+          .setThumbnail((await botInfo).avatarURL())
+          .addFields({
+            name: 'Bot Info:',
+            value: `<@${botId}> ~ ${botId}\n` + `developer: <@${userId}> ~ userId`
+          })
+          .setColor(parseInt('#FF5151'.replace(/^#/, ''), 16));
+
+        let embed = new EmbedBuilder()
+          .setTitle('Bot Canceled.')
+          .setThumbnail((await botInfo).avatarURL())
+          .setDescription(`User <@${userId}> has left the server and their bot application for <@${(await botInfo).id}> has been Canceled.`)
+          .setColor(parseInt('#FF5151'.replace(/^#/, ''), 16));
+
+        await origin.edit({embeds: [cancelEmbed],components: []});
+        publicChannel.send({content: `<@${userId}>`, embeds: [embed] });    
+        return;
+      }
+
       const bot = botData.data as Bot;
       /**
        * @description Embeds
