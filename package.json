@@ -44,7 +44,7 @@
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "commit-and-tag-version": "^12.5.0",
-    "eslint": "^9.17.0",
+    "eslint": "^10.0.0",
     "eslint-define-config": "^2.1.0",
     "module-alias": "^2.2.3",
     "pidusage": "^4.0.0",
